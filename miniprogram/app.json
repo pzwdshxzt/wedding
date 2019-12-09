@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/index/index",
+    "pages/system/system"
+  ],
+  "tabBar": {
+    "list": [
+      {
+        "iconPath": "/images/tar/home.png",
+        "selectedIconPath": "/images/tar/home-show.png",
+        "pagePath": "pages/home/home",
+        "text": "请柬"
+      },
+      {
+        "iconPath": "/images/tar/index.png",
+        "selectedIconPath": "/images/tar/index-show.png",
+        "pagePath": "pages/index/index",
+        "text": "我的"
+      },
+      {
+        "iconPath": "/images/tar/system.png",
+        "selectedIconPath": "/images/tar/system-show.png",
+        "pagePath": "pages/system/system",
+        "text": "系统"
+      }
+    ],
+    "selectedColor": "#e03997",
+    "borderStyle": "white",
+    "position": "bottom",
+    "backgroundColor": "#fff"
+  },
+  "window": {
+    "backgroundColor": "#ffffff",
+    "backgroundColorTop": "#ffffff",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#e03997",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "white",
+    "navigationStyle": "custom",
+    "enablePullDownRefresh": false
+  },
+  "cloud": true,
+  "usingComponents": {
+    "cu-custom": "/style/colorui/components/cu-custom"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}
