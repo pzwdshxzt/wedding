@@ -62,5 +62,8 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  showInvite: function(e) {
+    console.log(e)
   }
 })

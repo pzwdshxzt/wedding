@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/template/templateone/templateone",    
     "pages/home/home",
     "pages/index/index",
     "pages/system/system"
