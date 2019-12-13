@@ -15,77 +15,77 @@
 <view class="container container-fill">
   <view class="scroll-fullpage" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove" bindtouchend="scrollTouchend" style="-webkit-transform:translateY(-{{scrollindex*100}}%);transform:translateY(-{{scrollindex*100}}%);transition-duration:1.5s;margin-top: {{margintop}}px">
 
-    <!-- <view class=" bg-img  section section01" style="background: #6699FF;"> -->
-       <view class=" bg-img  section section01 {{scrollindex==0?'active':''}}" style="background-image:url(https://6465-dev-p-1300251472.tcb.qcloud.la/template/IMG_9912IMG_9912.png?sign=9fc2b1c329d5bf7474cb324b1a3034ff&t=1576030051)">
-      <text class="section-maintitle {{scrollindex==0?'animated fadeInDown slower':''}}">123131231</text>
-      <text class="section-subtitle {{scrollindex==0?'animated fadeInDown slower':''}}">&&&&&</text>
-      <text class="section-text {{scrollindex==0?'animated fadeInDown slower delay-2s':''}}">阿萨大大大苏打大大飒飒的卡德加啊按时打卡急啊卡的双卡双待阿德飒飒撒旦撒旦阿萨大大大苏打</text>
-      <view class="flex justify-center">
-        <image class="animated fadeOutDown slower delay-3s infinite" style="width: 30px; height: 30px;" src="cloud://dev-p.6465-dev-p-1300251472/template/pull.png"></image>
-      </view>
-    </view>
 
+    <view class="bg-img section" wx:for="{{weddingData.page}}" wx:for-index="index" wx:for-item="page" wx:key="index" style="background-image:url({{page.backgroundImg_url}})">
 
-
-
-    <!-- <view class=" bg-img  section section02" style="background: #6600FF;"> -->
-      <view class="bg-img section section02 {{scrollindex==1?'active':''}}" style="background-image:url(https://6465-dev-p-1300251472.tcb.qcloud.la/template/IMG_9968IMG_9968.png?sign=e0a76b7c7c33090ee72d66ad6968f173&t=1576030567)">
-      <text class="section-maintitle {{scrollindex==1?'animated fadeInDown slower':''}}">测试测试测试"2</text>
-      <text class="section-subtitle {{scrollindex==1?'animated fadeInDown slower':''}}">cinoLiu--2</text>
-      <text class="section-text {{scrollindex==1?'animated bounceInDown slower delay-2s':''}}">阿萨大大大苏打大大飒飒的卡德加啊按时打卡急啊卡的双卡双待阿德飒飒撒旦撒旦阿萨大大大苏打</text>
-      <view class="flex justify-center">
-        <image class="animated fadeOutDown slower delay-3s infinite" style="width: 30px; height: 30px;" src="cloud://dev-p.6465-dev-p-1300251472/template/pull.png"></image>
-      </view>
-    </view>
-    <view class="bg-img section section03 {{scrollindex==2?'active':''}}" style="background-image: url(https://6465-dev-p-1300251472.tcb.qcloud.la/template/IMG_9985IMG_9985.png?sign=78f39dee081138b37e3e52decbc9ff13&t=1576161426);">
-      <text class="section-maintitle">宴会地址</text>
-      <!-- <text class="section-subtitle" bindtap="initmap">cinoLiu--3</text> -->
-
-      <view class="section-end {{scrollindex==2?'animated bounceInDown slower':''}}">
-        <text class="section-subtitle">欢迎大火来参加！！</text>
-        <view class="cu-card">
-          <view class="cu-item shadow">
-            <form>
-              <view class="cu-form-group">
-                <view class="title" style="color:#ccc">姓名</view>
-                <input placeholder="姓名"></input>
-              </view>
-              <view class="cu-form-group">
-                <view class="title" style="color:#ccc">电话</view>
-                <input placeholder="电话(可选)"></input>
-              </view>
-            </form>
-          </view>
+      <view wx:if="{{page.type === 1}}" >
+        <view class="section-maintitle text-{{page.title_color}} {{scrollindex==index?'animated fadeInDown slower':''}}">{{page.title}}</view>
+        <view class="section-subtitle text-{{page.sub_title_color}} {{scrollindex==index?'animated fadeInDown slower':''}}">{{page.sub_title}}</view>
+        <view class="section-text text-{{page.content_color}} {{scrollindex==index?'animated fadeInDown slower delay-2s':''}}">{{page.content}}</view>
+        <view class="flex justify-center">
+          <image class="animated fadeOutDown slower delay-3s infinite" style="width: 30px; height: 30px;" src="cloud://dev-p.6465-dev-p-1300251472/template/pull.png"></image>
         </view>
       </view>
-      <view class="flex justify-center">
-        <image class="animated fadeOutDown slower delay-3s infinite" style="width: 30px; height: 30px;" src="cloud://dev-p.6465-dev-p-1300251472/template/pull.png"></image>
-      </view>
-    </view>
-    <view class="section section04 {{scrollindex==3?'active':''}}" style="background: #6699FF;">
 
-      <text class="section-maintitle">测试测试测试4</text>
-      <text class="section-subtitle">cinoLiu--4</text>
-      <view class="section-end shadow {{scrollindex==3?'animated bounceIn slower':''}}">
-        <text class="section-subtitle">欢迎大火来参加！！</text>
-        <view class="cu-card">
-          <view class="cu-item shadow">
-            <form>
-              <view class="cu-form-group">
-                <view class="title" style="color:#ccc">姓名</view>
-                <input placeholder="姓名"></input>
+
+      <!-- 位置 -->
+      <view wx:if="{{page.type === 2}}">
+        <view class="section-maintitle text-{{page.title_color}} {{scrollindex==index?'animated fadeInDown slower':''}}">{{page.title}}</view>
+        <view class="section-subtitle text-{{page.sub_title_color}} ">{{page.sub_title}}</view>
+        <view class="section-end {{scrollindex==index?'animated bounceInDown slower':''}}">
+          <view class="cu-card dynamic {{isCard?'no-card':''}}">
+            <view class="cu-item shadow">
+
+              <view class="cu-item">
+                <view class="text-gray padding">
+                  宴会时间：{{page.date}}
+                </view>
               </view>
-              <view class="cu-form-group">
-                <view class="title" style="color:#ccc">电话</view>
-                <input placeholder="电话(可选)"></input>
+              <view class="text-content text-gray">
+                宴会地点: {{page.location}}
               </view>
-            </form>
+              <view class="grid flex-sub padding-lr col-1" >
+                <map layer-style="2" bindtap="initmap" id="myMap" style="width: 100%; height: 200px;" latitude="{{page.latitude}}" longitude="{{page.longitude}}" markers="{{page.markers}}" show-location></map>
+              </view>
+              <view class="text-gray text-sm  padding">
+                点击图片导航到位置
+              </view>
+            </view>
           </view>
         </view>
+        <view class="flex justify-center">
+          <image class="animated fadeOutDown slower delay-3s infinite" style="width: 30px; height: 30px;" src="cloud://dev-p.6465-dev-p-1300251472/template/pull.png"></image>
+        </view>
       </view>
-      <view class="flex justify-center">
-        <button class="cu-btn round line-pink shadow">提交</button>
+
+
+      <view wx:if="{{page.type === 3}}">
+        <view class="section-maintitle text-{{page.title_color}}">{{page.title}}</view>
+        <view class="section-subtitle text-{{page.sub_title_color}}">{{page.sub_title}}</view>
+        <view class="section-end shadow {{scrollindex==index?'animated bounceIn slower':''}}">
+          <view class="section-subtitle text-{{page.content_color}}">{{page.content}}</view>
+          <view class="cu-card">
+            <view class="cu-item shadow">
+              <form>
+                <view class="cu-form-group">
+                  <view class="title" style="color:#ccc">姓名</view>
+                  <input placeholder="姓名">{{name}}</input>
+                </view>
+                <view class="cu-form-group">
+                  <view class="title" style="color:#ccc">电话</view>
+                  <input placeholder="电话(可选)">{{tel}}</input>
+                </view>
+              </form>
+            </view>
+          </view>
+        </view>
+        <view class="flex justify-center">
+          <button class="cu-btn round line-cyan shadow">提交</button>
+        </view>
       </view>
+
     </view>
+
+
   </view>
 </view>
