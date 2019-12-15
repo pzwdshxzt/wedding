@@ -1,0 +1,41 @@
+
+.show_title{
+
+  text-align: center;
+	font-size: 60rpx;
+  margin: auto 60rpx;
+  overflow-wrap: normal;
+  padding: 0 60rpx;
+  word-break:break-all;
+}
+/* .form-card{
+  margin: 5% 40rpx;
+  border-radius:25rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid pink;
+} */
+
+.cu-form-group .navigator{
+	text-align: justify;
+	padding-right: 30rpx;
+	font-size: 30rpx;
+	position: relative;
+	height: 60rpx;
+	line-height: 60rpx;
+}
+.cu-form-group .navigator::after {
+	font-family: "cuIcon";
+	display: block;
+	content: "\e6a3";
+	position: absolute;
+	font-size: 34rpx;
+	color: var(--grey);
+	/* line-height: 100rpx; */
+	width: 60rpx;
+	text-align: center;
+	top: 0;
+	bottom: 0;
+	right: -20rpx;
+	margin: auto;
+	padding: 7rpx 0;
+}

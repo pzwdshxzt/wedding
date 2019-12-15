@@ -7,6 +7,7 @@ Page({
     endy: 0, //结束的位置y
     max_move_time: 800, //触发翻页的临界值 最大值
     min_move_time: 200, //触发翻页的临界值 最小值
+    move_max: 120,
     margintop: 0, //滑动下拉距离
     music_url: musicUrl,
     isPlayingMusic: true,
@@ -14,35 +15,44 @@ Page({
     interval: 2600,
     duration: 1200,
     weddingData: {
+      groom: 'hjx',
+      bride: 'cyq',
       page:[{
           type: 1,
           backgroundImg_url: 'https://6465-dev-p-1300251472.tcb.qcloud.la/template/IMG_9968IMG_9968.png?sign=e0a76b7c7c33090ee72d66ad6968f173&t=1576030567',
           title: '人生若只如初见',
           title_color: 'cyan',
+          title_animate: 'animated fadeInDown slower',
           sub_title: 'hjx&cyq',
           sub_title_color: 'cyan',
+          sub_title_animate: 'animated fadeInDown slower',
           content: '期间卡斯卡死的坑点卡手机卡',
-          content_color: 'cyan'
+          content_color: 'cyan',
+          content_animate: 'animated fadeInDown slower delay-2s'
         },
         {
           type: 1,
           backgroundImg_url: 'https://6465-dev-p-1300251472.tcb.qcloud.la/template/IMG_9968IMG_9968.png?sign=e0a76b7c7c33090ee72d66ad6968f173&t=1576030567',
-          title: '人生若只如初见1',
+          title: '人生若只如初见111',
           title_color: 'cyan',
+          title_animate: 'animated shake fadeInDown slower',
           sub_title: 'hjx&cyq',
-          sub_title_color: '',
+          sub_title_color: 'cyan',
+          sub_title_animate: 'animated fadeInDown slower',
+          content: '期间卡斯卡死的坑点卡手机卡111',
           content_color: 'cyan',
-          content: '期间卡斯卡死的坑点卡手机卡11'
+          content_animate: 'animated fadeInDown slower delay-2s'
         },
         {
           type: 2,
           backgroundImg_url: 'https://6465-dev-p-1300251472.tcb.qcloud.la/template/IMG_9852IMG_9852.png?sign=b19f6a938cb3f5b583d83c4cf3490cd6&t=1576206399',
           title: '宴会地点',
-          title_color: '',
+          title_color: 'cyan',
           date: '2019年12月3日',
           location: '福建省莆田市仙游县鲤南镇象坂村后湖18号',
           latitude: 23.099994,
           longitude: 113.324520,
+          map_animate: 'animated bounceInDown slower',
           markers: [{
             id: 1,
             latitude: 23.099994,
@@ -57,6 +67,9 @@ Page({
           sub_title: 'hjx&cyq',
           sub_title_color: 'cyan',
           titles: '欢迎大火来参加！',
+          button_color: 'cyan',
+          button_name: '提交',
+          content_color: 'cyan',
           content: '欢迎大伙来参加'
         }
       ],
@@ -99,11 +112,11 @@ Page({
   scrollTouchend: function(e) {
     let d = this.data;
     let diffstamp = e.timeStamp - d.startTime
-    if (diffstamp < d.max_move_time && diffstamp > d.min_move_time && d.endy - d.starty > 100 && d.scrollindex > 0) {
+    if (diffstamp < d.max_move_time && diffstamp > d.min_move_time && d.endy - d.starty > d.move_max && d.scrollindex > 0) {
       this.setData({
         scrollindex: d.scrollindex - 1
       })
-    } else if (diffstamp < d.max_move_time && diffstamp > d.min_move_time && d.endy - d.starty < -100 && d.scrollindex < this.data.totalnum - 1) {
+    } else if (diffstamp < d.max_move_time && diffstamp > d.min_move_time && d.endy - d.starty < -d.move_max && d.scrollindex < this.data.totalnum - 1) {
       this.setData({
         scrollindex: d.scrollindex + 1
       })
@@ -133,31 +146,16 @@ Page({
     }
   },
   initmap: function(e) {
-
-
-    let that = this
-
-    let oi_latitude = Number(37.895525).toFixed(5)
-
-    let oi_longitude = Number(117.398193).toFixed(5)
-
+    let oi_latitude = Number(e.detail.latitude).toFixed(5)
+    let oi_longitude = Number(e.detail.longitude).toFixed(5)
     console.log(oi_latitude, oi_longitude)
-
-    wx.openLocation({ //所以这里会显示你当前的位置
-
-      latitude: Number(oi_latitude), // 纬度，范围为-90~90，负数表示南纬
-
-      longitude: Number(oi_longitude), // 经度，范围为-180~180，负数表示西经
-
+    wx.openLocation({ 
+      latitude: Number(oi_latitude), 
+      longitude: Number(oi_longitude), 
       success: function(res) {
-
         console.log(res)
-
       }
-
     })
-
-
   }
 
 })

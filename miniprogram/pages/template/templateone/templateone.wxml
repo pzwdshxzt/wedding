@@ -14,28 +14,22 @@
 </view>
 <view class="container container-fill">
   <view class="scroll-fullpage" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove" bindtouchend="scrollTouchend" style="-webkit-transform:translateY(-{{scrollindex*100}}%);transform:translateY(-{{scrollindex*100}}%);transition-duration:1.5s;margin-top: {{margintop}}px">
-
-
     <view class="bg-img section" wx:for="{{weddingData.page}}" wx:for-index="index" wx:for-item="page" wx:key="index" style="background-image:url({{page.backgroundImg_url}})">
-
       <view wx:if="{{page.type === 1}}" >
-        <view class="section-maintitle text-{{page.title_color}} {{scrollindex==index?'animated fadeInDown slower':''}}">{{page.title}}</view>
-        <view class="section-subtitle text-{{page.sub_title_color}} {{scrollindex==index?'animated fadeInDown slower':''}}">{{page.sub_title}}</view>
-        <view class="section-text text-{{page.content_color}} {{scrollindex==index?'animated fadeInDown slower delay-2s':''}}">{{page.content}}</view>
+        <view class="section-maintitle text-{{page.title_color}} {{ scrollindex===index? page.title_animate:''}}">{{page.title}}</view>
+        <view class="section-subtitle text-{{page.sub_title_color}} {{scrollindex===index? page.sub_title_animate:''}}">{{page.sub_title}}</view>
+        <view class="section-text text-{{page.content_color}} {{scrollindex===index ? page.content_animate:''}}">{{page.content}}</view>
         <view class="flex justify-center">
           <image class="animated fadeOutDown slower delay-3s infinite" style="width: 30px; height: 30px;" src="cloud://dev-p.6465-dev-p-1300251472/template/pull.png"></image>
         </view>
       </view>
-
-
       <!-- 位置 -->
       <view wx:if="{{page.type === 2}}">
-        <view class="section-maintitle text-{{page.title_color}} {{scrollindex==index?'animated fadeInDown slower':''}}">{{page.title}}</view>
-        <view class="section-subtitle text-{{page.sub_title_color}} ">{{page.sub_title}}</view>
-        <view class="section-end {{scrollindex==index?'animated bounceInDown slower':''}}">
+        <view class="section-maintitle text-{{page.title_color}} {{scrollindex==index? page.title_animate:''}}">{{page.title}}</view>
+        <view class="section-subtitle text-{{page.sub_title_color}} {{scrollindex==index? page.sub_title_animate:''}} ">{{page.sub_title}}</view>
+        <view class="section-end {{scrollindex==index? page.map_animate:''}}">
           <view class="cu-card dynamic {{isCard?'no-card':''}}">
             <view class="cu-item shadow">
-
               <view class="cu-item">
                 <view class="text-gray padding">
                   宴会时间：{{page.date}}
@@ -45,10 +39,10 @@
                 宴会地点: {{page.location}}
               </view>
               <view class="grid flex-sub padding-lr col-1" >
-                <map layer-style="2" bindtap="initmap" id="myMap" style="width: 100%; height: 200px;" latitude="{{page.latitude}}" longitude="{{page.longitude}}" markers="{{page.markers}}" show-location></map>
+                <map layer-style="2" catchtap="initmap" id="myMap" style="width: 100%; height: 200px;" latitude="{{page.latitude}}" longitude="{{page.longitude}}" markers="{{page.markers}}" show-location></map>
               </view>
               <view class="text-gray text-sm  padding">
-                点击图片导航到位置
+                点击地图导航到位置
               </view>
             </view>
           </view>
@@ -57,8 +51,6 @@
           <image class="animated fadeOutDown slower delay-3s infinite" style="width: 30px; height: 30px;" src="cloud://dev-p.6465-dev-p-1300251472/template/pull.png"></image>
         </view>
       </view>
-
-
       <view wx:if="{{page.type === 3}}">
         <view class="section-maintitle text-{{page.title_color}}">{{page.title}}</view>
         <view class="section-subtitle text-{{page.sub_title_color}}">{{page.sub_title}}</view>
@@ -68,11 +60,11 @@
             <view class="cu-item shadow">
               <form>
                 <view class="cu-form-group">
-                  <view class="title" style="color:#ccc">姓名</view>
+                  <view class="title text-grey">姓名</view>
                   <input placeholder="姓名">{{name}}</input>
                 </view>
                 <view class="cu-form-group">
-                  <view class="title" style="color:#ccc">电话</view>
+                  <view class="title text-grey">电话</view>
                   <input placeholder="电话(可选)">{{tel}}</input>
                 </view>
               </form>
@@ -80,12 +72,9 @@
           </view>
         </view>
         <view class="flex justify-center">
-          <button class="cu-btn round line-cyan shadow">提交</button>
+          <button class="cu-btn round line-{{page.button_color}} shadow">{{page.button_name}}</button>
         </view>
       </view>
-
     </view>
-
-
   </view>
 </view>

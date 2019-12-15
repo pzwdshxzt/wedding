@@ -80,7 +80,6 @@ button,
 input,
 textarea,
 label,
-navigator,
 image {
 	box-sizing: border-box;
 }
@@ -2437,6 +2436,7 @@ button.icon.lg {
 	right: -20rpx;
 	margin: auto;
 }
+
 
 .cu-form-group textarea[disabled],
 .cu-form-group textarea[disabled] .placeholder {

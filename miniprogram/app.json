@@ -1,11 +1,12 @@
 {
   "pages": [
-    
-    "pages/template/templateone/templateone",
+    "pages/template/templateone/create",
     "pages/home/home",
     "pages/index/index",
     "pages/system/system",
-    "pages/map/map"
+    "pages/map/map",
+    "pages/template/templateone/templateone"
+    
   ],
   "tabBar": {
     "list": [
@@ -51,7 +52,7 @@
   "style": "v2",
   "permission": {
     "scope.userLocation": {
-      "desc": "定位宴会地址" 
+      "desc": "定位宴会地址"
     }
   }
 }
