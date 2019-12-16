@@ -54,8 +54,8 @@
       <view wx:if="{{page.type === 3}}">
         <view class="section-maintitle text-{{page.title_color}}">{{page.title}}</view>
         <view class="section-subtitle text-{{page.sub_title_color}}">{{page.sub_title}}</view>
-        <view class="section-end shadow {{scrollindex==index?'animated bounceIn slower':''}}">
-          <view class="section-subtitle text-{{page.content_color}}">{{page.content}}</view>
+        <view class="section-end shadow">
+          <view class="section-subtitle {{scrollindex==index?page.content_animate:''}} text-{{page.content_color}}">{{page.content}}</view>
           <view class="cu-card">
             <view class="cu-item shadow">
               <form>

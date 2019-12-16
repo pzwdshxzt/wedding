@@ -11,14 +11,16 @@ Page({
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
     title: '',
-    title_index: null,
-    sub_title: '',
-    sub_title_index: null,
+    titleColor: '',
+    titleIndex: null,
+    subTitle: '',
+    subTitleColor: '',
+    subTitleIndex: null,
     content: '',
-    content_index: null,
-    page_index: '0',
-    pageArray: [
-      {
+    contentColor: '',
+    contentIndex: null,
+    pageIndex: '0',
+    pageArray: [{
         name: '选择页面',
         type: '99'
       },
@@ -35,33 +37,38 @@ Page({
         type: '3'
       },
     ],
-    titleMultiIndex: [0, 0, 0, 0],
-    subTitleMultiIndex: [0, 0, 0, 0],
-    contentMultiIndex: [0, 0, 0, 0],
+    titleMultiIndex: [22, 3, 0, 0],
+    titleAnimate: '',
+    subTitleMultiIndex: [22, 3, 0, 0],
+    subTitleAnimate: '',
+    contentMultiIndex: [22, 3, 0, 0],
+    contentAnimate: '',
     date: '2018-12-25',
     selectMapLocation: {
       name: '地图选择'
     },
     time: '12:01',
     date: '2018-12-25',
-    region: ['广东省', '广州市', '海珠区'],
     imgList: [],
-    modalName: null,
-    textareaAValue: '',
-    textareaBValue: ''
+    pageData:{
+
+    }
   },
+
   /** 页面类型选择 */
   PagePickerChange(e) {
     console.log(e);
     this.setData({
-      page_index: e.detail.value
+      pageIndex: e.detail.value
     })
   },
   /** 标题颜色选择 */
   TitleColorPickerChange(e) {
-    console.log(e);
+    let ColorList = this.data.ColorList
+    let colorIndex = e.detail.value
     this.setData({
-      title_index: e.detail.value
+      titleIndex: colorIndex,
+      titleColor: ColorList[colorIndex].name
     })
   },
   SetTitleValue(e) {
@@ -72,47 +79,74 @@ Page({
   },
   /** 子标题颜色选择 */
   SubTitleColorPickerChange(e) {
-    console.log(e);
+    let ColorList = this.data.ColorList
+    let colorIndex = e.detail.value
     this.setData({
-      sub_title_index: e.detail.value
+      subTitleIndex: colorIndex,
+      subTitleColor: ColorList[colorIndex].name
     })
   },
   SetSubTitleValue(e) {
     console.log(e)
     this.setData({
-      sub_title: e.detail.value
+      subTitle: e.detail.value
     })
   },
   /** 文案颜色选择 */
   ContentColorPickerChange(e) {
-    console.log(e);
+    let ColorList = this.data.ColorList
+    let colorIndex = e.detail.value
     this.setData({
-      content_index: e.detail.value
+      contentIndex: e.detail.value,
+      contentColor:  ColorList[colorIndex].name
     })
   },
   SetContentValue(e) {
-    console.log(e)
     this.setData({
       content: e.detail.value
     })
   },
   /** 标题动画选择 */
   TitleMultiChange(e) {
+    let AnimateArray = this.data.AnimateArray
+    let animateArray = e.detail.value
     this.setData({
-      titleMultiIndex: e.detail.value
+      titleAnimate: ''
+    }, () => {
+      this.setData({
+        titleMultiIndex: animateArray,
+        titleAnimate: 'animated ' + AnimateArray[0][animateArray[0]].code + ' ' + AnimateArray[1][animateArray[1]].code + ' ' + AnimateArray[2][animateArray[2]].code + ' ' + AnimateArray[3][animateArray[3]].code
+      })
     })
+
   },
   /** 子标题动画选择 */
   SubTitleMultiChange(e) {
+    let AnimateArray = this.data.AnimateArray
+    let animateArray = e.detail.value
     this.setData({
-      subTitleMultiIndex: e.detail.value
+      subTitleAnimate: ''
+    }, () => {
+      this.setData({
+        subTitleMultiIndex: animateArray,
+        subTitleAnimate: 'animated ' + AnimateArray[0][animateArray[0]].code + ' ' + AnimateArray[1][animateArray[1]].code + ' ' + AnimateArray[2][animateArray[2]].code + ' ' + AnimateArray[3][animateArray[3]].code
+      })
     })
+
   },
   /** 文案动画选择 */
   ContentMultiChange(e) {
+    let AnimateArray = this.data.AnimateArray
+    let animateArray = e.detail.value
     this.setData({
-      contentMultiIndex: e.detail.value
+      contentAnimate: ''
+    }, () => {
+      this.setData({
+        contentMultiIndex: e.detail.value,
+        contentAnimate: 'animated ' + AnimateArray[0][animateArray[0]].code + ' ' + AnimateArray[1][animateArray[1]].code + ' ' + AnimateArray[2][animateArray[2]].code + ' ' + AnimateArray[3][animateArray[3]].code
+      })
     })
+
   },
   /** 宴会日期选择器 */
   DateChange(e) {
@@ -130,20 +164,6 @@ Page({
           selectMapLocation: data
         })
       }
-    })
-    // this.setData({
-    //   date: e.detail.value
-    // })
-  },
-  TimeChange(e) {
-    this.setData({
-      time: e.detail.value
-    })
-  },
-
-  RegionChange: function (e) {
-    this.setData({
-      region: e.detail.value
     })
   },
   ChooseImage() {
@@ -186,15 +206,28 @@ Page({
       }
     })
   },
-  textareaAInput(e) {
-    this.setData({
-      textareaAValue: e.detail.value
-    })
-  },
-  textareaBInput(e) {
-    this.setData({
-      textareaBValue: e.detail.value
-    })
-  },
+  saveToView(e){
+    let d = this.data
+    let pageData = {}
 
+    /** 选择通用页面 */
+    if(d.pageIndex === '1'){
+      pageData = {
+        type: 1,
+        backgroundImg_url: d.imgList[0],
+        title: d.title,
+        titleColor: d.titleColor,
+        titleAnimate: d.titleAnimate,
+        subTitle: d.subTitle,
+        subTitleColor: d.subTitleColor,
+        subTitleAnimate: d.subTitleAnimate,
+        content: d.content,
+        contentColor: d.contentColor,
+        contentAnimate: d.contentAnimate
+      }
+    }
+    wx.navigateTo({
+      url: 'templateone?type=1&page='+ JSON.stringify(pageData)
+    })
+  }
 })

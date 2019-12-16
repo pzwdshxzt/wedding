@@ -1,4 +1,65 @@
 const musicUrl = 'http://www.ytmp3.cn/down/49676.mp3'
+
+
+
+// page:[{
+      //     type: 1,
+      //     backgroundImg_url: 'https://6465-dev-p-1300251472.tcb.qcloud.la/template/IMG_9968IMG_9968.png?sign=e0a76b7c7c33090ee72d66ad6968f173&t=1576030567',
+      //     title: '人生若只如初见',
+      //     title_color: 'cyan',
+      //     title_animate: 'animated fadeInDown slower',
+      //     sub_title: 'hjx&cyq',
+      //     sub_title_color: 'cyan',
+      //     sub_title_animate: 'animated fadeInDown slower',
+      //     content: '期间卡斯卡死的坑点卡手机卡',
+      //     content_color: 'cyan',
+      //     content_animate: 'animated fadeInDown slower delay-2s'
+      //   },
+      //   {
+      //     type: 1,
+      //     backgroundImg_url: 'https://6465-dev-p-1300251472.tcb.qcloud.la/template/IMG_9968IMG_9968.png?sign=e0a76b7c7c33090ee72d66ad6968f173&t=1576030567',
+      //     title: '人生若只如初见111',
+      //     title_color: 'cyan',
+      //     title_animate: 'animated shake fadeInDown slower',
+      //     sub_title: 'hjx&cyq',
+      //     sub_title_color: 'cyan',
+      //     sub_title_animate: 'animated fadeInDown slower',
+      //     content: '期间卡斯卡死的坑点卡手机卡111',
+      //     content_color: 'cyan',
+      //     content_animate: 'animated fadeInDown slower delay-2s'
+      //   },
+      //   {
+      //     type: 2,
+      //     backgroundImg_url: 'https://6465-dev-p-1300251472.tcb.qcloud.la/template/IMG_9852IMG_9852.png?sign=b19f6a938cb3f5b583d83c4cf3490cd6&t=1576206399',
+      //     title: '宴会地点',
+      //     title_color: 'cyan',
+      //     date: '2019年12月3日',
+      //     location: '福建省莆田市仙游县鲤南镇象坂村后湖18号',
+      //     latitude: 23.099994,
+      //     longitude: 113.324520,
+      //     map_animate: 'animated bounceInDown slower',
+      //     markers: [{
+      //       id: 1,
+      //       latitude: 23.099994,
+      //       longitude: 113.324520,
+      //       name: 'T.I.T 创意园'
+      //     }]
+      //   }, {
+      //     type: 3,
+      //     backgroundImg_url: 'https://6465-dev-p-1300251472.tcb.qcloud.la/template/IMG_9852IMG_9852-1.png?sign=b5ccfef9142f4f6cb86d7a46d5691d1e&t=1576206852',
+      //     title: '人生若只如初见',
+      //     title_color: 'cyan',
+      //     sub_title: 'hjx&cyq',
+      //     sub_title_color: 'cyan',
+      //     button_color: 'cyan',
+      //     button_name: '提交',
+      //     content_color: 'cyan',
+      //     content: '欢迎大伙来参加',
+      //     content_animate: 'animated fadeInDown slower delay-2s'
+      //   }
+      // ],
+
+
 Page({
   data: {
     scrollindex: 0, //当前页面的索引值
@@ -15,70 +76,18 @@ Page({
     interval: 2600,
     duration: 1200,
     weddingData: {
-      groom: 'hjx',
-      bride: 'cyq',
-      page:[{
-          type: 1,
-          backgroundImg_url: 'https://6465-dev-p-1300251472.tcb.qcloud.la/template/IMG_9968IMG_9968.png?sign=e0a76b7c7c33090ee72d66ad6968f173&t=1576030567',
-          title: '人生若只如初见',
-          title_color: 'cyan',
-          title_animate: 'animated fadeInDown slower',
-          sub_title: 'hjx&cyq',
-          sub_title_color: 'cyan',
-          sub_title_animate: 'animated fadeInDown slower',
-          content: '期间卡斯卡死的坑点卡手机卡',
-          content_color: 'cyan',
-          content_animate: 'animated fadeInDown slower delay-2s'
-        },
-        {
-          type: 1,
-          backgroundImg_url: 'https://6465-dev-p-1300251472.tcb.qcloud.la/template/IMG_9968IMG_9968.png?sign=e0a76b7c7c33090ee72d66ad6968f173&t=1576030567',
-          title: '人生若只如初见111',
-          title_color: 'cyan',
-          title_animate: 'animated shake fadeInDown slower',
-          sub_title: 'hjx&cyq',
-          sub_title_color: 'cyan',
-          sub_title_animate: 'animated fadeInDown slower',
-          content: '期间卡斯卡死的坑点卡手机卡111',
-          content_color: 'cyan',
-          content_animate: 'animated fadeInDown slower delay-2s'
-        },
-        {
-          type: 2,
-          backgroundImg_url: 'https://6465-dev-p-1300251472.tcb.qcloud.la/template/IMG_9852IMG_9852.png?sign=b19f6a938cb3f5b583d83c4cf3490cd6&t=1576206399',
-          title: '宴会地点',
-          title_color: 'cyan',
-          date: '2019年12月3日',
-          location: '福建省莆田市仙游县鲤南镇象坂村后湖18号',
-          latitude: 23.099994,
-          longitude: 113.324520,
-          map_animate: 'animated bounceInDown slower',
-          markers: [{
-            id: 1,
-            latitude: 23.099994,
-            longitude: 113.324520,
-            name: 'T.I.T 创意园'
-          }]
-        }, {
-          type: 3,
-          backgroundImg_url: 'https://6465-dev-p-1300251472.tcb.qcloud.la/template/IMG_9852IMG_9852-1.png?sign=b5ccfef9142f4f6cb86d7a46d5691d1e&t=1576206852',
-          title: '人生若只如初见',
-          title_color: 'cyan',
-          sub_title: 'hjx&cyq',
-          sub_title_color: 'cyan',
-          titles: '欢迎大火来参加！',
-          button_color: 'cyan',
-          button_name: '提交',
-          content_color: 'cyan',
-          content: '欢迎大伙来参加'
-        }
+      page:[
       ],
       music_url: ''
     },
     startTime: 0
 
   },
-  onLoad: function() {
+  onLoad: function(e) {
+    console.log(e)
+    let page = JSON.parse(e.page)
+    this.data.weddingData.page.push(page)
+
     var that = this
     this.setData({
       totalnum: that.data.weddingData.page.length

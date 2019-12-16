@@ -1,7 +1,4 @@
-// miniprogram/pages/map/map.js
-
-let QQMapWX = require('../../lib/qqmap-wx-jssdk.js');
-let qqmapsdk;
+// miniprogram/pages/template/selecttemplate.js
 Page({
 
   /**
@@ -11,15 +8,11 @@ Page({
 
   },
 
-
   /**
    * 生命周期函数--监听页面加载
-   * U4RBZ-OUE6F-NS7JF-NYGYS-TR347-RSBRE
    */
   onLoad: function (options) {
-    qqmapsdk = new QQMapWX({
-      key: 'U4RBZ-OUE6F-NS7JF-NYGYS-TR347-RSBRE'
-    })
+
   },
 
   /**
@@ -33,19 +26,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // 调用接口
-    qqmapsdk.search({
-      keyword: '仙游县鲤南镇象坂村',
-      success: function (res) {
-        console.log(res);
-      },
-      fail: function (res) {
-        console.log(res);
-      },
-      complete: function (res) {
-        console.log(res);
-      }
-    })
+
   },
 
   /**

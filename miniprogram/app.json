@@ -4,9 +4,8 @@
     "pages/home/home",
     "pages/index/index",
     "pages/system/system",
-    "pages/map/map",
-    "pages/template/templateone/templateone"
-    
+    "pages/template/templateone/templateone",
+    "pages/template/selecttemplate"
   ],
   "tabBar": {
     "list": [
@@ -49,10 +48,5 @@
     "cu-custom": "/style/colorui/components/cu-custom"
   },
   "sitemapLocation": "sitemap.json",
-  "style": "v2",
-  "permission": {
-    "scope.userLocation": {
-      "desc": "定位宴会地址"
-    }
-  }
+  "style": "v2"
 }
