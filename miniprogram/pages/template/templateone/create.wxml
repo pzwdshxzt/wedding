@@ -44,7 +44,7 @@
     </view>
   </view>
   <view wx:if="{{pageIndex === '1'}}">
-    <view style="{{ColorList[titleIndex].color === '#ffffff'? '  background-color:black;':''}}"  class="show_title {{subTitleIndex?'text-'+ ColorList[subTitleIndex].name:''}} {{subTitleAnimate}}">{{subTitle}}</view>
+    <view style="{{ColorList[subTitleIndex].color === '#ffffff'? '  background-color:black;':''}}"  class="show_title {{subTitleIndex?'text-'+ ColorList[subTitleIndex].name:''}} {{subTitleAnimate}}">{{subTitle}}</view>
     <view class="cu-form-group">
       <view class="title">子标题</view>
       <input placeholder="子标题" bindblur="SetSubTitleValue" value="{{subTitle}}"></input>

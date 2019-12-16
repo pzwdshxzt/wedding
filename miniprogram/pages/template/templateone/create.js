@@ -11,14 +11,14 @@ Page({
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
     title: '',
-    titleColor: '',
-    titleIndex: null,
+    titleColor: 'white',
+    titleIndex: '14',
     subTitle: '',
-    subTitleColor: '',
-    subTitleIndex: null,
+    subTitleColor: 'white',
+    subTitleIndex: '14',
     content: '',
-    contentColor: '',
-    contentIndex: null,
+    contentColor: 'white',
+    contentIndex: '14',
     pageIndex: '0',
     pageArray: [{
         name: '选择页面',
@@ -38,11 +38,11 @@ Page({
       },
     ],
     titleMultiIndex: [22, 3, 0, 0],
-    titleAnimate: '',
+    titleAnimate: 'animated fadeInDown slower',
     subTitleMultiIndex: [22, 3, 0, 0],
-    subTitleAnimate: '',
+    subTitleAnimate: 'animated fadeInDown slower',
     contentMultiIndex: [22, 3, 0, 0],
-    contentAnimate: '',
+    contentAnimate: 'animated fadeInDown slower',
     date: '2018-12-25',
     selectMapLocation: {
       name: '地图选择'
@@ -172,11 +172,13 @@ Page({
       sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album'], //从相册选择
       success: (res) => {
+        console.log(res)
         if (this.data.imgList.length != 0) {
           this.setData({
             imgList: this.data.imgList.concat(res.tempFilePaths)
           })
         } else {
+         
           this.setData({
             imgList: res.tempFilePaths
           })
@@ -213,7 +215,7 @@ Page({
     /** 选择通用页面 */
     if(d.pageIndex === '1'){
       pageData = {
-        type: 1,
+        type: '1',
         backgroundImg_url: d.imgList[0],
         title: d.title,
         titleColor: d.titleColor,
