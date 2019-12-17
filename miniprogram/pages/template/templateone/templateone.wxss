@@ -12,6 +12,21 @@
   height: 100%;
 }
 
+.background-img {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.content-show {
+  position: absolute;
+  z-index: 10;
+  top: 0rpx;
+  height: 100%;
+  width: 100%;
+}
+
 .section-maintitle {
   display: block;
   text-align: center;

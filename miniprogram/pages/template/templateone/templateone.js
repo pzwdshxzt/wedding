@@ -1,10 +1,5 @@
 const musicUrl = 'http://www.ytmp3.cn/down/49676.mp3'
 
-
-
-
-
-
 Page({
   data: {
     scrollindex: 0, //当前页面的索引值

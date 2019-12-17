@@ -1,23 +1,27 @@
 
 
-  <view wx:if="{{music_url}}">
-    <view wx:if="{{isPlayingMusic}}">
-      <view class="background_music" bindtap="play">
-        <image src="cloud://dev-p.6465-dev-p-1300251472/template/music_icon.png" class="musicImg music_icon" />
-        <image src="cloud://dev-p.6465-dev-p-1300251472/template/music_play.png" class="music_play pauseImg" />
-      </view>
-    </view>
-    <view wx:else>
-      <view class="background_music" bindtap="play">
-        <image src="cloud://dev-p.6465-dev-p-1300251472/template/music_icon.png" class="musicImg" />
-        <image src="cloud://dev-p.6465-dev-p-1300251472/template/music_play.png" class="music_play playImg" />
-      </view>
+  
+<view wx:if="{{music_url}}">
+  <view wx:if="{{isPlayingMusic}}">
+    <view class="background_music" bindtap="play">
+      <image src="cloud://dev-p.6465-dev-p-1300251472/template/music_icon.png" class="musicImg music_icon" />
+      <image src="cloud://dev-p.6465-dev-p-1300251472/template/music_play.png" class="music_play pauseImg" />
     </view>
   </view>
-  <view wx:if="{{!loading}}" class="container container-fill">
-    <view class="scroll-fullpage" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove" bindtouchend="scrollTouchend" style="-webkit-transform:translateY(-{{scrollindex*100}}%);transform:translateY(-{{scrollindex*100}}%);transition-duration:1.5s;margin-top: {{margintop}}px">
-      <view class="bg-img section" wx:for="{{weddingData.page}}" wx:for-index="index" wx:for-item="page" wx:key="index" style="background-image:url({{page.backgroundImg_url}})">
-        <view wx:if="{{page.type === '1'}}" >
+  <view wx:else>
+    <view class="background_music" bindtap="play">
+      <image src="cloud://dev-p.6465-dev-p-1300251472/template/music_icon.png" class="musicImg" />
+      <image src="cloud://dev-p.6465-dev-p-1300251472/template/music_play.png" class="music_play playImg" />
+    </view>
+  </view>
+</view>
+<view wx:if="{{!loading}}" class="container container-fill">
+  <view class="scroll-fullpage" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove" bindtouchend="scrollTouchend" style="-webkit-transform:translateY(-{{scrollindex*100}}%);transform:translateY(-{{scrollindex*100}}%);transition-duration:1.5s;margin-top: {{margintop}}px">
+    <view class="bg-img section" wx:for="{{weddingData.page}}" wx:for-index="index" wx:for-item="page" wx:key="index">
+      <image class="background-img" src="{{page.backgroundImg_url}}"  mode="aspectFill" />
+     
+        <!-- 通用 -->
+        <view class="content-show" wx:if="{{page.type === '1'}}" >
           <view class="section-maintitle text-{{page.titleColor}} {{ scrollindex===index? page.titleAnimate:''}}">{{page.title}}</view>
           <view class="section-subtitle text-{{page.subTitleColor}} {{scrollindex===index? page.subTitleAnimate:''}}">{{page.subTitle}}</view>
           <view class="section-text text-{{page.contentColor}} {{scrollindex===index ? page.contentAnimate:''}}">{{page.content}}</view>
@@ -26,7 +30,7 @@
           </view>
         </view>
         <!-- 位置 -->
-        <view wx:if="{{page.type === '2'}}">
+        <view class="content-show" wx:if="{{page.type === '2'}}">
           <view class="section-maintitle text-{{page.titleColor}} {{scrollindex==index? page.titleAnimate:''}}">{{page.title}}</view>
           <view class="section-subtitle text-{{page.subTitleColor}} {{scrollindex==index? page.subTitleAnimate:''}} ">{{page.subTitle}}</view>
           <view class="section-end {{scrollindex==index? page.mapAnimate:''}}">
@@ -38,10 +42,10 @@
                 </view>
                 </view>
                 <view class="text-content text-gray">
-                宴会地点: {{page.location}}
+                宴会地点: {{page.location.address}}
               </view>
                 <view class="grid flex-sub padding-lr col-1" >
-                  <map layer-style="2" catchtap="initmap" id="myMap" style="width: 100%; height: 200px;" latitude="{{page.latitude}}" longitude="{{page.longitude}}" markers="{{page.markers}}" show-location></map>
+                  <map layer-style="2" catchtap="initmap" id="myMap" style="width: 100%; height: 200px;" latitude="{{page.location.latitude}}" longitude="{{page.location.longitude}}" markers="{{page.location}}" show-location></map>
                 </view>
                 <view class="text-gray text-sm  padding">
                 点击地图导航到位置
@@ -53,7 +57,8 @@
             <image class="animated fadeOutDown slower delay-3s infinite" style="width: 30px; height: 30px;" src="cloud://dev-p.6465-dev-p-1300251472/template/pull.png"></image>
           </view>
         </view>
-        <view wx:if="{{page.type === '3'}}">
+        <!-- 报名 -->
+        <view class="content-show" wx:if="{{page.type === '3'}}">
           <view class="section-maintitle text-{{page.titleColor}}">{{page.title}}</view>
           <view class="section-subtitle text-{{page.subTitleColor}}">{{page.subTitle}}</view>
           <view class="section-end shadow">
@@ -73,14 +78,14 @@
               </view>
             </view>
           </view>
-          <view class="flex justify-center">
-            <button class="cu-btn round line-{{page.buttonColor}} shadow">{{page.button_name}}</button>
+          <view class="flex justify-center {{scrollindex==index?page.contentAnimate:''}}">
+            <button class="cu-btn round line-{{page.buttonColor}} shadow">{{page.buttonName}}</button>
           </view>
         </view>
-      </view>
+     
     </view>
   </view>
-
+</view>
 <view wx:if="{{loading}}">
   <loading></loading>
 </view>

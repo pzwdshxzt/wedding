@@ -12,7 +12,7 @@
     </picker>
   </view>
   <view wx:if="{{pageIndex === '1' || pageIndex === '2' || pageIndex === '3'}}">
-    <view style="{{ColorList[titleIndex].color === '#ffffff'? '  background-color:black;':''}}" class="show_title {{titleIndex?'text-'+ ColorList[titleIndex].name:''}} {{titleAnimate}}">{{title}}</view>
+    <view style="{{ColorList[titleIndex].color === '#ffffff'? '  background-color:pink;':''}}" class="show_title {{titleIndex?'text-'+ ColorList[titleIndex].name:''}} {{titleAnimate}}">{{title}}</view>
     <view class="cu-form-group">
       <view class="title">标题</view>
       <input placeholder="标题" value="{{title}}" bindblur="SetTitleValue"></input>
@@ -37,14 +37,13 @@
           
           <text class="cuIcon-title lg text-gray"></text>
 					{{AnimateArray[3][titleMultiIndex[3]].name}}
-				
         
         </view>
       </picker>
     </view>
   </view>
-  <view wx:if="{{pageIndex === '1'}}">
-    <view style="{{ColorList[subTitleIndex].color === '#ffffff'? '  background-color:black;':''}}"  class="show_title {{subTitleIndex?'text-'+ ColorList[subTitleIndex].name:''}} {{subTitleAnimate}}">{{subTitle}}</view>
+  <view wx:if="{{pageIndex === '1' || pageIndex === '2'}}">
+    <view style="{{ColorList[subTitleIndex].color === '#ffffff'? '  background-color:pink;':''}}"  class="show_title {{subTitleIndex?'text-'+ ColorList[subTitleIndex].name:''}} {{subTitleAnimate}}">{{subTitle}}</view>
     <view class="cu-form-group">
       <view class="title">子标题</view>
       <input placeholder="子标题" bindblur="SetSubTitleValue" value="{{subTitle}}"></input>
@@ -61,22 +60,34 @@
         <view class="picker">
 				{{AnimateArray[0][subTitleMultiIndex[0]].name}}
           
+          
+          
+          
           <text class="cuIcon-title lg text-gray"></text> 
         {{AnimateArray[1][subTitleMultiIndex[1]].name}}
+          
+          
+          
           
           <text class="cuIcon-title lg text-gray"></text>
         {{AnimateArray[2][subTitleMultiIndex[2]].name}}
           
+          
+          
+          
           <text class="cuIcon-title lg text-gray"></text>
         {{AnimateArray[3][subTitleMultiIndex[3]].name}}
 			
+        
+        
+        
         
         </view>
       </picker>
     </view>
   </view>
   <view wx:if="{{pageIndex === '1'  ||  pageIndex === '3'}}">
-    <view style="{{ColorList[titleIndex].color === '#ffffff'? '  background-color:black;':''}}"  class="show_title {{contentIndex?'text-'+ ColorList[contentIndex].name:''}} {{contentAnimate}}">{{content}}</view>
+    <view style="{{ColorList[contentIndex].color === '#ffffff'? '  background-color:pink;':''}}"  class="show_title {{contentIndex?'text-'+ ColorList[contentIndex].name:''}} {{contentAnimate}}">{{content}}</view>
     <view class="cu-form-group align-start">
       <view class="title">底部文案</view>
       <textarea maxlength="-1" bindblur="SetContentValue" value="{{content}}" placeholder="输入底部文案"></textarea>
@@ -93,15 +104,20 @@
         <view class="picker">
 				{{AnimateArray[0][contentMultiIndex[0]].name}}
           
+          
           <text class="cuIcon-title lg text-gray"></text> 
         {{AnimateArray[1][contentMultiIndex[1]].name}}
+          
           
           <text class="cuIcon-title lg text-gray"></text>
         {{AnimateArray[2][contentMultiIndex[2]].name}}
           
+          
           <text class="cuIcon-title lg text-gray"></text> 
         {{AnimateArray[3][contentMultiIndex[3]].name}}
-			
+
+        
+        
         
         </view>
       </picker>
@@ -122,6 +138,38 @@
       <view class="navigator" bindtap="MapSelect">{{selectMapLocation.name}}</view>
     </view>
   </view>
+  <!-- 按钮 -->
+  <view wx:if="{{pageIndex === '3'}}">
+    <view style="{{ColorList[buttonIndex].color === '#ffffff'? '  background-color:pink;':''}}" class="show_title {{buttonIndex?'text-'+ ColorList[buttonIndex].name:''}} {{buttonAnimate}}">{{buttonName}}</view>
+    <view class="cu-form-group">
+      <view class="title">按钮</view>
+      <input placeholder="按钮文字" value="{{buttonName}}" bindblur="SetButtonNameValue"></input>
+      <picker bindchange="ButtonColorPickerChange" range-key="title" value="{{buttonIndex}}" range="{{ColorList}}">
+        <view class="picker">
+				{{buttonIndex?ColorList[buttonIndex].title:'选择颜色'}}
+			</view>
+      </picker>
+    </view>
+    <view class="cu-form-group">
+      <view class="title">按钮进场动画</view>
+      <picker mode="multiSelector" bindchange="ButtonMultiChange" value="{{buttonMultiIndex}}"
+			range="{{AnimateArray}}" range-key="name">
+        <view class="picker">
+					{{AnimateArray[0][buttonMultiIndex[0]].name}}
+          
+          <text class="cuIcon-title lg text-gray"></text>
+					{{AnimateArray[1][buttonMultiIndex[1]].name}}
+          
+          <text class="cuIcon-title lg text-gray"></text>
+					{{AnimateArray[2][buttonMultiIndex[2]].name}}
+          
+          <text class="cuIcon-title lg text-gray"></text>
+					{{AnimateArray[3][buttonMultiIndex[3]].name}}
+        
+        </view>
+      </picker>
+    </view>
+  </view>
   <!-- 背景图片选择器 -->
   <view wx:if="{{pageIndex === '1' ||pageIndex === '2' || pageIndex === '3'}}">
     <view class="cu-bar bg-white margin-top">
@@ -134,19 +182,20 @@
     </view>
     <view class="cu-form-group">
       <view class="grid col-4 grid-square flex-sub">
-        <view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
-          <image src='{{imgList[index]}}' mode='aspectFill'></image>
-          <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+        <view wx:if="{{files !== ''}}" class="bg-img" bindtap="ViewImage" data-url="{{files}}">
+          <image src='{{files}}' mode='aspectFill'></image>
+          <view class="cu-tag bg-red" catchtap="DelImg" >
             <text class="cuIcon-close"></text>
           </view>
         </view>
-        <view class="solids" bindtap="ChooseImage" wx:if="{{1 >=imgList.length}}">
+        <view class="solids" bindtap="ChooseImage" wx:if="{{files === ''}}">
           <text class="cuIcon-cameraadd"></text>
         </view>
       </view>
     </view>
   </view>
   <view class="padding flex flex-direction">
-    <button bindtap="saveToView" wx:if="{{pageIndex === '1' ||pageIndex === '2' || pageIndex === '3'}}" class="cu-btn bg-pink margin-tb-sm lg">保存并预览</button>
+    <button bindtap="showCreate" wx:if="{{pageIndex !== '0'}}" class="cu-btn bg-pink margin-tb-sm lg">预览</button>
+    <button bindtap="saveCreate" wx:if="{{pageIndex !== '0'}}" class="cu-btn bg-pink margin-tb-sm lg">保存并返回</button>
   </view>
 </form>
