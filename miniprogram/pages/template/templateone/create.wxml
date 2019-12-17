@@ -29,14 +29,26 @@
         <view class="picker">
 					{{AnimateArray[0][titleMultiIndex[0]].name}}
           
+          
+          
+          
           <text class="cuIcon-title lg text-gray"></text>
 					{{AnimateArray[1][titleMultiIndex[1]].name}}
+          
+          
+          
           
           <text class="cuIcon-title lg text-gray"></text>
 					{{AnimateArray[2][titleMultiIndex[2]].name}}
           
+          
+          
+          
           <text class="cuIcon-title lg text-gray"></text>
 					{{AnimateArray[3][titleMultiIndex[3]].name}}
+        
+        
+        
         
         </view>
       </picker>
@@ -63,14 +75,23 @@
           
           
           
+          
+          
+          
           <text class="cuIcon-title lg text-gray"></text> 
         {{AnimateArray[1][subTitleMultiIndex[1]].name}}
           
           
           
           
+          
+          
+          
           <text class="cuIcon-title lg text-gray"></text>
         {{AnimateArray[2][subTitleMultiIndex[2]].name}}
+          
+          
+          
           
           
           
@@ -82,11 +103,14 @@
         
         
         
+        
+        
+        
         </view>
       </picker>
     </view>
   </view>
-  <view wx:if="{{pageIndex === '1'  ||  pageIndex === '3'}}">
+  <view wx:if="{{pageIndex === '1' || pageIndex === '3'}}">
     <view style="{{ColorList[contentIndex].color === '#ffffff'? '  background-color:pink;':''}}"  class="show_title {{contentIndex?'text-'+ ColorList[contentIndex].name:''}} {{contentAnimate}}">{{content}}</view>
     <view class="cu-form-group align-start">
       <view class="title">底部文案</view>
@@ -105,17 +129,29 @@
 				{{AnimateArray[0][contentMultiIndex[0]].name}}
           
           
+          
+          
+          
           <text class="cuIcon-title lg text-gray"></text> 
         {{AnimateArray[1][contentMultiIndex[1]].name}}
+          
+          
+          
           
           
           <text class="cuIcon-title lg text-gray"></text>
         {{AnimateArray[2][contentMultiIndex[2]].name}}
           
           
+          
+          
+          
           <text class="cuIcon-title lg text-gray"></text> 
         {{AnimateArray[3][contentMultiIndex[3]].name}}
 
+        
+        
+        
         
         
         
@@ -157,14 +193,26 @@
         <view class="picker">
 					{{AnimateArray[0][buttonMultiIndex[0]].name}}
           
+          
+          
+          
           <text class="cuIcon-title lg text-gray"></text>
 					{{AnimateArray[1][buttonMultiIndex[1]].name}}
+          
+          
+          
           
           <text class="cuIcon-title lg text-gray"></text>
 					{{AnimateArray[2][buttonMultiIndex[2]].name}}
           
+          
+          
+          
           <text class="cuIcon-title lg text-gray"></text>
 					{{AnimateArray[3][buttonMultiIndex[3]].name}}
+        
+        
+        
         
         </view>
       </picker>

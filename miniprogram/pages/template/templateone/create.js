@@ -190,6 +190,7 @@ Page({
   },
   /** 宴会地点选择 */
   MapSelect(e) {
+    /** 判断是否授权未处理 */
     console.log(e)
     wx.chooseLocation({
       success: (data) => {
@@ -197,6 +198,9 @@ Page({
         this.setData({
           selectMapLocation: data
         })
+      },
+      fail: (data) =>{
+        console.log(data);
       }
     })
   },
