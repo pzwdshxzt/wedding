@@ -1,12 +1,12 @@
 {
   "pages": [
-
-    "pages/template/templateone/create",
+    "pages/template/selecttemplate",
     "pages/home/home",
+    "pages/template/templateone/create",
     "pages/index/index",
     "pages/system/system",
     "pages/template/templateone/templateone",
-    "pages/template/selecttemplate"
+    "pages/template/edittemplate"
   ],
   "tabBar": {
     "list": [
@@ -49,5 +49,13 @@
     "cu-custom": "/style/colorui/components/cu-custom"
   },
   "sitemapLocation": "sitemap.json",
-  "style": "v2"
+  "style": "v2",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于创建请柬时候选择办理地点"
+    },
+    "scope.userInfo": {
+      "desc": "获取个人呢称用于请柬展示"
+    }
+  }
 }

@@ -1,19 +1,19 @@
-// miniprogram/pages/template/selecttemplate.js
+// miniprogram/pages/template/edittemplate.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    templates:[
+    tmpList:[
       {
-        picUrl: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10000.jpg',
-        name:'模板一',
-        url: '/pages/template/templateone/templateone'
+        name: '12313'
       },
       {
-        picUrl: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg',
-        name:'待更新'
+        name: '12313asdgfd'
+      },
+      {
+        name: '12313asda'
       }
     ]
   },
@@ -59,10 +59,17 @@ Page({
   onPullDownRefresh: function () {
 
   },
-  /** 选择模板 */
-  selectTemplate: (e) => {
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  AddPage:(e)=>{
     wx.navigateTo({
-      url: 'edittemplate'
+      url: 'templateone/create'
     })
   }
 })

@@ -1,0 +1,14 @@
+<cu-custom bgColor="bg-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">选择模板</view>
+</cu-custom>
+<view class="bg-white padding">
+  <view class="grid col-2 margin-bottom text-center">
+    <view class="padding" wx:for="{{templates}}" wx:for-item="tmp" wx:key>
+      <image src="{{tmp.picUrl}}" mode="aspectFill"></image>
+      <text style="padding: 10rpx 0; color: pink"> {{tmp.name}}</text>
+      <button bindtap="selectTemplate" class="cu-btn round line-pink shadow " style="width:100%; margin-top:10rpx">选择</button>
+    </view>
+  </view>
+  
+</view>

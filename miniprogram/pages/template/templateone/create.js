@@ -192,6 +192,16 @@ Page({
   MapSelect(e) {
     /** 判断是否授权未处理 */
     console.log(e)
+    // wx.getSetting({
+    //   success (res) {
+    //     res.
+    //     console.log(res.authSetting)
+    //     // res.authSetting = {
+    //     //   "scope.userInfo": true,
+    //     //   "scope.userLocation": true
+    //     // }
+    //   }
+    // })
     wx.chooseLocation({
       success: (data) => {
         console.log(data);
