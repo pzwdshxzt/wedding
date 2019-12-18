@@ -7,217 +7,68 @@ const getTimeStamp = () => {
   return Date.parse(new Date())
 }
 
-/**
- * 根据 planId 查询计划下所以Job
- */
-const queryJobs = planId => {
-  return new Promise((resolve, reject) => {
-    db.collection('Jobs').where({
-      planId: planId
-    }).get().then(res => {
-      resolve(res.data)
-    })
-  })
+/** 获取模板 */
+const getTemplate = () =>{
+  return db.collection('Template').get()
 }
 
-/**
- * 更新Jobs doneCount
+
+/** 
+ * 获取创建的模板
+ * @param openId 用户id
+ * @returns 查询返回
  */
-const updateJobs = (_id, doneCount) => {
-  return new Promise((resolve, reject) => {
-    wx.cloud.callFunction({
-      name: 'dbConsole',
-      data: {
-        action: 'updateJobs',
-        _id: _id,
-        doneCount: doneCount,
-        updateTime: getTimeStamp()
-      },
-      success: res => {
-        if (res.result.stats.updated === 0) {
-          reject()
-        } else {
-          resolve(res)
-        }
-      },
-      fail: res => {
-        console.log("updateJobs fail")
-        reject()
-      }
-    })
-  })
+const getCreativesByOpenId = (openId) =>{
+  return db.collection('Creative').where({
+    _openid: openId
+  }).get()
 }
 
-/**
- * 任务审核 --->更新JobDetails
- * authFlag: 审核状态
- * authApplyTextarea： 审核内容
- * return 
+/** 
+ * 获取创建的模板 
+ * @param id 创建的模板id
+ * @returns 查询返回
  */
-const updateJobDetails = (_id, authFlag, authApplyTextarea) => {
-  return new Promise((resolve, reject) => {
-    wx.cloud.callFunction({
-      name: 'dbConsole',
-      data: {
-        action: 'updateJobDetails',
-        _id: _id,
-        authFlag: authFlag,
-        authApplyTextarea: authApplyTextarea,
-        updateTime: getTimeStamp()
-      },
-      success: res => {
-        if (res.result.stats.updated === 0) {
-          reject()
-        } else {
-          resolve(res)
-        }
-      },
-      fail: res => {
-        console.log("updateJobDetails fail")
-        reject()
-      }
-    })
-  })
+const getCreativesById = (id) =>{
+  return db.collection('Creative').doc(id).get()
 }
 
-/**
- * 更新任务状态
- */
-const updateJobStatus = (_id, status) => {
-  return new Promise((resolve, reject) => {
-    wx.cloud.callFunction({
-      name: 'dbConsole',
-      data: {
-        action: 'updateJobStatus',
-        _id: _id,
-        status: status,
-        updateTime: getTimeStamp()
-      },
-      success: res => {
-        if (res.result.stats.updated === 0) {
-          reject()
-        } else {
-          resolve(res)
-        }
-      },
-      fail: res => {
-        reject()
-      }
-    })
-  })
-}
-
-/**
- * 更新所有任务状态
- */
-const updateJobsAllStatus = (_id, status) => {
-  return new Promise((resolve, reject) => {
-    wx.cloud.callFunction({
-      name: 'dbConsole',
-      data: {
-        action: 'updateJobsAllStatus',
-        _id: _id,
-        status: status,
-        updateTime: getTimeStamp()
-      }
-    }).then(res => {
-      if (res.result.stats.updated === 0) {
-        reject()
-      } else {
-        resolve(res)
-      }
-    }).catch(res => {
-      reject(res)
-    })
-  })
-}
-/**
- * 更新计划状态
- */
-const updatePlanStatus = (_id, status) => {
-  return new Promise((resolve, reject) => {
-    wx.cloud.callFunction({
-      name: 'dbConsole',
-      data: {
-        action: 'updatePlanStatus',
-        _id: _id,
-        status: status,
-        updateTime: getTimeStamp()
-      }
-    }).then(res => {
-      if (status === 3) {
-        if (res.result.stats.updated === 0) {
-          reject()
-        } else {
-          updateJobsAllStatus(_id, 3).then(res => {
-            resolve(res)
-          })
-        }
-      }
-      resolve(res)
-    }).catch(res => {
-      reject(res)
-    })
-  })
-}
-/**
- * 更新计划状态
- */
-const updatePlanShow = (_id, show) => {
-  return new Promise((resolve, reject) => {
-    wx.cloud.callFunction({
-      name: 'dbConsole',
-      data: {
-        action: 'updatePlanShow',
-        _id: _id,
-        show: show,
-        updateTime: getTimeStamp()
-      }
-    }).then(res => {
-      if (res.result.stats.updated === 0) {
-        reject()
-      } else {
-        resolve(res)
-      }
-    }).catch(res => {
-      reject(res)
-    })
-  })
-}
-
-/**
- * 运动计划打卡申请
- */
-const updateJobsByWeRun = (_id, clockData) => {
-  return new Promise((resolve, reject) => {
-    console.log('123')
-    wx.cloud.callFunction({
-      name: 'dbConsole',
-      data: {
-        action: 'updateJobsByWeRun',
-        _id,
-        clockData,
-        updateTime: getTimeStamp()
-      }
-    }).then(res => {
+/** 选择模板后 创建当前 */
+const addCreavite = (templateId, name) => {
+  return db.collection('Creative').add({
+    data:{
+      templateId,
+      name
+    },
+    success: res =>{
+      console.log('add creative success')
       console.log(res)
-      if (res.result.stats.updated === 0) {
-        reject()
-      } else {
-        resolve(res)
-      }
-    }).catch(res => {
-      reject(res)
-    })
+    }
   })
 }
+
+/** 
+ * 插入页面
+ * @param id 模板id
+ * @param page 页面信息
+ * @returns 
+ */
+const addPageInCreative = (id,page) =>{
+  return db.collection('Creative').doc(id).update({
+    data:{
+      pages:_.push(page)
+    }
+  })
+}
+
+
+
+
 
 module.exports = {
-  updateJobs: updateJobs,
-  updateJobDetails: updateJobDetails,
-  queryJobs: queryJobs,
-  updateJobStatus: updateJobStatus,
-  updatePlanStatus: updatePlanStatus,
-  updatePlanShow: updatePlanShow,
-  updateJobsByWeRun: updateJobsByWeRun
+  getTemplate,
+  getCreativesByOpenId,
+  getCreativesById,
+  addPageInCreative,
+  addCreavite
 }

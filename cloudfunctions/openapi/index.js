@@ -19,6 +19,9 @@ exports.main = async (event, context) => {
     case 'getOpenData': {
       return getOpenData(event)
     }
+    case 'getOpenContext': {
+      return getOpenContext(event)
+    }
     default: {
       return
     }
@@ -92,4 +95,9 @@ async function getOpenData(event) {
   return cloud.getOpenData({
     list: event.openData.list,
   })
+}
+
+async function getOpenContext(event) {
+  // 需 wx-server-sdk >= 0.5.0
+  return cloud.getWXContext()
 }

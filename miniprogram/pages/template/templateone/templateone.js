@@ -7,8 +7,8 @@ Page({
     starty: 0, //开始的位置x
     endy: 0, //结束的位置y
     max_move_time: 800, //触发翻页的临界值 最大值
-    min_move_time: 200, //触发翻页的临界值 最小值
-    move_max: 120,
+    min_move_time: 150, //触发翻页的临界值 最小值
+    move_max: 100,
     margintop: 0, //滑动下拉距离
     music_url: musicUrl,
     isPlayingMusic: true,
@@ -27,19 +27,34 @@ Page({
   },
   onLoad: function(e) {
     console.log(e)
-    let page = JSON.parse(e.page)
-    this.data.weddingData.page.push(page)
-
+    // let page = JSON.parse(e.page)
+    // this.data.weddingData.page.push(page)
+    let type = e.type
     let that = this
-    let param = {}
-    let str = 'weddingData.page[0]'
-    param[str] = page
-    that.setData(param,()=>{
+    if(type === '1'){
+
+      let page = wx.getStorageSync('showPageOne')
+      let param = {}
+      let str = 'weddingData.pages[0]'
+      param[str] = page
+      that.setData(param,()=>{
+        this.setData({
+          loading: false,
+          totalnum: that.data.weddingData.page.length
+        })
+      })
+    }
+    if(type === '2'){
+      let weddingData = wx.getStorageSync('weddingData')
       this.setData({
         loading: false,
-        totalnum: that.data.weddingData.page.length
+        weddingData,
+        totalnum: weddingData.pages.length
       })
-    })
+    }
+
+    
+    
     
     // wx.playBackgroundAudio({
     //   dataUrl: musicUrl,
@@ -70,11 +85,15 @@ Page({
   scrollTouchend: function(e) {
     let d = this.data;
     let diffstamp = e.timeStamp - d.startTime
+    console.log(diffstamp)
+    console.log( d.endy - d.starty)
     if (diffstamp < d.max_move_time && diffstamp > d.min_move_time && d.endy - d.starty > d.move_max && d.scrollindex > 0) {
+      console.log('qqqqqq')
       this.setData({
         scrollindex: d.scrollindex - 1
       })
     } else if (diffstamp < d.max_move_time && diffstamp > d.min_move_time && d.endy - d.starty < -d.move_max && d.scrollindex < this.data.totalnum - 1) {
+      console.log('uuuuuuu')
       this.setData({
         scrollindex: d.scrollindex + 1
       })

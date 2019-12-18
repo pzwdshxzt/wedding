@@ -7,8 +7,7 @@
     <view class="padding" wx:for="{{templates}}" wx:for-item="tmp" wx:key>
       <image src="{{tmp.picUrl}}" mode="aspectFill"></image>
       <text style="padding: 10rpx 0; color: pink"> {{tmp.name}}</text>
-      <button bindtap="selectTemplate" class="cu-btn round line-pink shadow " style="width:100%; margin-top:10rpx">选择</button>
+      <button bindtap="selectTemplate" data-tmpId="{{tmp._id}}" data-name="{{tmp.name}}"  class="cu-btn round line-pink shadow" disabled="{{tmp.invalid}}" style="width:100%; margin-top:10rpx">选择</button>
     </view>
   </view>
-  
 </view>

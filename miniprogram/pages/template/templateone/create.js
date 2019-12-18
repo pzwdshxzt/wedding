@@ -1,8 +1,10 @@
 const app = getApp();
 const util = require('../../../Utils/Util.js');
+const db = require('../../../Utils/DbConsole')
 const fs = wx.getFileSystemManager()
 Page({
   data: {
+    tmpid: '',
     AnimateArray: [
       app.globalData.AnimateList,
       app.globalData.AnimateSpeed,
@@ -12,6 +14,7 @@ Page({
     ColorList: app.globalData.ColorList,
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
+    pageArray: app.globalData.pageArray,
     title: '',
     titleColor: 'white',
     titleIndex: '14',
@@ -25,23 +28,6 @@ Page({
     buttonColor: 'white',
     buttonIndex: '14',
     pageIndex: '0',
-    pageArray: [{
-      name: '选择页面',
-      type: '99'
-    },
-    {
-      name: '通用',
-      type: '1'
-    },
-    {
-      name: '地点',
-      type: '2'
-    },
-    {
-      name: '联系方式',
-      type: '3'
-    },
-    ],
     titleMultiIndex: [22, 3, 0, 0],
     titleAnimate: 'animated fadeInDown slower',
     subTitleMultiIndex: [22, 3, 0, 0],
@@ -56,11 +42,18 @@ Page({
       name: '地图选择'
     },
     files: '',
+    videoUrl: '',
+    videoImg: '',
     pageData: {
 
     }
   },
-
+  onLoad(e){
+    console.log(e)
+    this.setData({
+      tmpid: e.tmpid
+    })
+  },
   /** 页面类型选择 */
   PagePickerChange(e) {
     console.log(e);
@@ -235,17 +228,29 @@ Page({
             files: res.fileID
           })
         })
-
-        // this.setData({
-        //   files: res.tempFilePaths[0]
-        // })
       }
     });
   },
+  
   ViewImage(e) {
     wx.previewImage({
       current: this.data.files
     });
+  },
+  DelVideo(e) {
+    wx.showModal({
+      title: '视频删除',
+      content: '确定要删除这个视频🐎？',
+      cancelText: '再看看',
+      confirmText: '再见',
+      success: res => {
+        if (res.confirm) {
+          this.setData({
+            videoUrl: ''
+          })
+        }
+      }
+    })
   },
   /** 文件上传 最后修改成本地文件 到时候在处理 */
   DelImg(e) {
@@ -263,7 +268,33 @@ Page({
       }
     })
   },
-  showCreate(e) {
+  /** 上传视频 */
+  ChooseVideo() {
+    let d = this.data
+    let that = this
+    wx.chooseVideo({
+      sourceType: ['album', 'camera'],
+      maxDuration: 60,
+      camera: ['front','back'],
+      success: function(res) {
+        console.log(res)
+        let chooseImg = res
+        let path = 'user/background-video-' + util.getTimeStamp() + '.mp4'
+        wx.cloud.uploadFile({
+          cloudPath: path,
+          filePath: res.tempFilePath,
+        }).then(res => {
+          console.log(res)
+          that.setData({
+            videoUrl: res.fileID,
+            videoImg: chooseImg.thumbTempFilePath
+          })
+        })
+      }
+    })
+  
+  },
+  getPageInfo(e) {
     let d = this.data
     let pageData = {}
 
@@ -271,6 +302,7 @@ Page({
     if (d.pageIndex === '1') {
       pageData = {
         type: '1',
+        name: '通用页面',
         backgroundImg_url: d.files,
         title: d.title,
         titleColor: d.titleColor,
@@ -288,6 +320,7 @@ Page({
     if (d.pageIndex === '2') {
       pageData = {
         type: '2',
+        name: '地图页面',
         backgroundImg_url: d.files,
         title: d.title,
         titleColor: d.titleColor,
@@ -304,6 +337,7 @@ Page({
     if (d.pageIndex === '3') {
       pageData = {
         type: '3',
+        name: '填单页面',
         backgroundImg_url: d.files,
         title: d.title,
         titleColor: d.titleColor,
@@ -317,11 +351,40 @@ Page({
       }
     }
 
-    if (d.pageIndex !== '0') {
-      wx.navigateTo({
-        url: 'templateone?type=1&page=' + JSON.stringify(pageData)
-      })
+
+    /** 选择视频页面 */
+    if (d.pageIndex === '4') {
+      pageData = {
+        type: '4',
+        name: '视频页面',
+        videoUrl: d.videoUrl
+      }
     }
 
+    return pageData
+  },
+
+  showCreate(e) {
+    console.log(e)
+    let pageData = this.getPageInfo()
+    wx.setStorage({
+      key: 'showPageOne',
+      data: pageData,
+      success: function(res) {
+        wx.navigateTo({
+          url: '../templateone/templateone?type=1'
+        })
+      },
+      fail: function(err){
+        console.log(err)
+      }
+    })
+
+  },
+  saveCreate(e){
+    let pageData = this.getPageInfo()
+    db.addPageInCreative(this.data.tmpid,pageData).then(res=>{
+      util.backPage(1)
+    })
   }
 })

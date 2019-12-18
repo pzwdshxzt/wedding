@@ -3,12 +3,12 @@
   <view slot="content">编辑模板</view>
 </cu-custom>
 <view class="cu-card  cu-list" wx:if="{{!loading}}">
-  <view class="cu-item shadow-blur {{modalName=='move-box-'+ index?'move-cur':''}}" style="background-color:#0081ff" wx:for="{{tmpList}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
+  <view class="cu-item shadow-blur {{modalName=='move-box-'+ index?'move-cur':''}}" style="background-color:#8dc63f" wx:for="{{creative.pages}}" wx:key="index" bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
     <view class="cardTitle ">
       <view class="content">
-        <text>第{{index}}个页面</text>
+        <text>第{{index + 1}}个页面</text>
         <view class="text-gray text-sm">
-          <text class="cuIcon-vipcard text-white ">{{item.name}}}</text>
+          <text class="cuIcon-favor text-white">{{item.name}}</text>
         </view>
       </view>
     </view>
@@ -26,5 +26,8 @@
       预览
     </view>
   </view>
+</view>
+<view wx:if="{{loading}}">
+  <loading></loading>
 </view>
 <view class="cu-tabbar-height"></view>

@@ -166,7 +166,7 @@ const getUserInfo = () => {
 }
 const gotoAuth = () => {
   wx.navigateTo({
-    url: '../Auth/Auth'
+    url: '../auth/auth'
   })
 }
 const addUserInfo = (openid, userInfo) => {

@@ -1,12 +1,14 @@
 {
   "pages": [
+    
+    "pages/index/index",
     "pages/template/selecttemplate",
     "pages/home/home",
     "pages/template/templateone/create",
-    "pages/index/index",
     "pages/system/system",
     "pages/template/templateone/templateone",
-    "pages/template/edittemplate"
+    "pages/template/edittemplate",
+    "pages/auth/auth"
   ],
   "tabBar": {
     "list": [
@@ -53,9 +55,6 @@
   "permission": {
     "scope.userLocation": {
       "desc": "用于创建请柬时候选择办理地点"
-    },
-    "scope.userInfo": {
-      "desc": "获取个人呢称用于请柬展示"
     }
   }
 }

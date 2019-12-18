@@ -13,7 +13,7 @@
   </view>
   <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
     <view class="cu-item arrow">
-      <navigator class="content" url="/pages/index/log/log" hover-class="none">
+      <navigator class="content" url="/pages/system/log/log" hover-class="none">
         <text class="cuIcon-formfill text-green"></text>
         <text class="text-grey">升级日志</text>
       </navigator>

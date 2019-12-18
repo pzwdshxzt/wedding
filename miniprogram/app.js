@@ -26,6 +26,27 @@ App({
 
   },
   globalData: {
+    pageArray: [{
+      name: '选择页面',
+      type: '99'
+    },
+    {
+      name: '通用',
+      type: '1'
+    },
+    {
+      name: '地点',
+      type: '2'
+    },
+    {
+      name: '联系方式',
+      type: '3'
+    },
+    {
+      name: '视频',
+      type: '4'
+    }
+    ],
     ColorList: [{
         title: '嫣红',
         name: 'red',
