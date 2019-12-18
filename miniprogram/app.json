@@ -1,6 +1,6 @@
 {
   "pages": [
-    
+    "pages/test/test",
     "pages/index/index",
     "pages/template/selecttemplate",
     "pages/home/home",

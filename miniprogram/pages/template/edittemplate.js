@@ -20,7 +20,7 @@ Page({
     this.setData({
       tmpid: options.tmpid
     })
-    this.queryCreative()
+   
   },
   queryCreative:function () {
     db.getCreativesById(this.data.tmpid).then(res => {

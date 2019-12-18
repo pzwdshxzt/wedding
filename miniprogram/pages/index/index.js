@@ -17,7 +17,7 @@ Page({
       that.setData({
         openid
       })
-      this.queryCreative(openid)
+       this.queryCreative(openid)
     }).catch(err => {
       wx.showToast({
         title: '获取个人信息失败',
