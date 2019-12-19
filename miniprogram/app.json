@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/test/test",
+    
     "pages/index/index",
+    "pages/template/sortList",
     "pages/template/selecttemplate",
     "pages/home/home",
     "pages/template/templateone/create",

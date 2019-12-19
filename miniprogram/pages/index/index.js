@@ -77,28 +77,42 @@ Page({
       url: '../template/edittemplate?tmpid=' + e.currentTarget.dataset.tmpid
     })
   },
-  /** 移动 */
+  /** 左滑开始 */
   ListTouchStart(e) {
     this.setData({
       ListTouchStart: e.touches[0].pageX
     })
   },
+
+  /** 左滑 */
   ListTouchMove(e) {
+    let d = this.data
+    let diff = e.touches[0].pageX - d.ListTouchStart
+    
+    let t = 'none'
+    if(diff > 100){
+      t = 'right'
+    }
+    if(diff < -100){
+      t = 'left'
+    }
     this.setData({
-      ListTouchDirection: e.touches[0].pageX - this.data.ListTouchStart > 0 ? 'right' : 'left'
+      ListTouchDirection: t
     })
   },
-
+  /** 左滑结束 */
   ListTouchEnd(e) {
     if (this.data.ListTouchDirection == 'left') {
       this.setData({
         modalName: e.currentTarget.dataset.target
       })
-    } else {
+    } 
+    if (this.data.ListTouchDirection == 'right') {
       this.setData({
         modalName: null
       })
     }
+
     this.setData({
       ListTouchDirection: null
     })

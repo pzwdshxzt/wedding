@@ -1,4 +1,5 @@
 const musicUrl = 'http://www.ytmp3.cn/down/49676.mp3'
+const db = require('../../../Utils/DbConsole')
 
 Page({
   data: {
@@ -53,14 +54,30 @@ Page({
       })
     }
 
-    
-    
+    if(type === '3'){
+      this.setData({
+        tmpid: e.tmpid
+      },() => {
+        this.queryCreative();
+      })
+      
+    }
     
     // wx.playBackgroundAudio({
     //   dataUrl: musicUrl,
     //   title: '',
     //   coverImgUrl: ''
     // })
+  },
+  queryCreative:function () {
+    db.getCreativesById(this.data.tmpid).then(res => {
+      console.log(res)
+      this.setData({
+        weddingData: res.data,
+        totalnum: res.data.pages.length,
+        loading: false
+      })
+    })
   },
   scrollTouchstart: function(e) {
     let startTime = e.timeStamp

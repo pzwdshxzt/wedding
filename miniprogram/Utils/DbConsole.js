@@ -60,6 +60,19 @@ const addPageInCreative = (id,page) =>{
     }
   })
 }
+/** 
+ * 保存修改页面顺序
+ * @param id 模板id
+ * @param page 页面信息
+ * @returns 
+ */
+const saveSortList = (id,pages) =>{
+  return db.collection('Creative').doc(id).update({
+    data:{
+      pages: pages
+    }
+  })
+}
 
 
 
@@ -70,5 +83,6 @@ module.exports = {
   getCreativesByOpenId,
   getCreativesById,
   addPageInCreative,
-  addCreavite
+  addCreavite,
+  saveSortList
 }

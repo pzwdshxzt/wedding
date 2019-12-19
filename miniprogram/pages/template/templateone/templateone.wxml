@@ -59,7 +59,7 @@
 				<view class="section-maintitle text-{{page.titleColor}}">{{page.title}}</view>
 				<view class="section-subtitle text-{{page.subTitleColor}}">{{page.subTitle}}</view>
 				<view class="section-end shadow">
-					<view class="section-subtitle {{scrollindex==index?page.contentAnimate:''}} text-{{page.contentColor}}">{{page.content}}</view>
+					<view class="section-subtitle {{scrollindex==index?page.contentAnimate:''}} text-{{page.contentColor}}" style="word-break:break-all;">{{page.content}}</view>
 					<view class="cu-card">
 						<view class="cu-item shadow">
 							<form>

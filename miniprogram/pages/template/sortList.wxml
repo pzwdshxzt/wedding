@@ -1,0 +1,47 @@
+<cu-custom bgColor="bg-pink" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">编辑模板</view>
+</cu-custom>
+
+<view wx:if="{{!loading}}">
+<movable-area class='movable-area' style='display:{{movableViewInfo.showClass}}; height:{{pageInfo.scrollHeight}}%;'>
+	<movable-view class='row  movable-row' out-of-bounds='true' damping='100' style='height:{{pageInfo.rowHeight}}px;' direction="vertical" y="{{movableViewInfo.y}}">
+		<view class="cu-card  cu-list">
+			<view class="cu-item shadow-blur" style="background-color:#8dc63f">
+				<view class="move-title">
+					<view class="content">
+						<text>{{movableViewInfo.data.title || '视频无标题'}}</text>
+						<view class="text-gray text-sm">
+							<text class="cuIcon-favor text-white">{{movableViewInfo.data.name}}</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</movable-view>
+</movable-area>
+<!-- <scroll-view scroll-with-animation="true" scroll-anchoring='{{true}}' scroll-y='{{pageInfo.scrollY}}' style='height: {{pageInfo.scrollHeight}}%'> -->
+	<view class="cu-card  cu-list" style='height: {{pageInfo.scrollHeight}}%'>
+		<view class="cuIcon-move cu-item shadow-blur {{modalName=='move-box-'+ index?'move-cur':''}}" style="background-color:#8dc63f" wx:for="{{creative.pages}}" wx:key="index">
+			<view class="cardTitle " data-index='{{index}}' bindtouchstart='dragStartTwo' bindtouchmove='dragMoveTwo' bindtouchend='dragEndTwo'>
+				<view class="content">
+						<text>{{item.title || '视频无标题'}}</text>
+					<view class="text-gray text-sm">
+						<text class="cuIcon-favor text-white" >{{item.name}}</text>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-item bg-img shadow-blur" bindtap="SaveSortList" style="background-color:#e03997">
+    <view class="cardTitle">
+      完成
+    </view>
+  </view>
+	</view>
+<!-- </scroll-view> -->
+</view>
+
+<view wx:if="{{loading}}">
+	<loading></loading>
+</view>
+<view class="cu-tabbar-height"></view>

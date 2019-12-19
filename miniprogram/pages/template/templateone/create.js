@@ -298,6 +298,44 @@ Page({
     let d = this.data
     let pageData = {}
 
+
+
+    /**
+     * 
+     * 
+     * 
+     * title: '',
+    titleColor: 'white',
+    titleIndex: '14',
+    subTitle: '',
+    subTitleColor: 'white',
+    subTitleIndex: '14',
+    content: '',
+    contentColor: 'white',
+    contentIndex: '14',
+    buttonName: '提交',
+    buttonColor: 'white',
+    buttonIndex: '14',
+    pageIndex: '0',
+    titleMultiIndex: [22, 3, 0, 0],
+    titleAnimate: 'animated fadeInDown slower',
+    subTitleMultiIndex: [22, 3, 0, 0],
+    subTitleAnimate: 'animated fadeInDown slower',
+    contentMultiIndex: [22, 3, 0, 0],
+    contentAnimate: 'animated fadeInDown slower',
+    buttonMultiIndex: [22, 3, 0, 0],
+    buttonAnimate: 'animated fadeInDown slower',
+    date: '2018-12-25',
+    time: '12:01',
+    selectMapLocation: {
+      name: '地图选择'
+    },
+    files: '',
+    videoUrl: '',
+    videoImg: '',
+     * 
+     * 
+     */
     /** 选择通用页面 */
     if (d.pageIndex === '1') {
       pageData = {
@@ -305,13 +343,19 @@ Page({
         name: '通用页面',
         backgroundImg_url: d.files,
         title: d.title,
+        titleIndex: d.titleIndex,
         titleColor: d.titleColor,
+        titleMultiIndex: d.titleMultiIndex,
         titleAnimate: d.titleAnimate,
         subTitle: d.subTitle,
+        subTitleIndex: d.subTitleIndex,
         subTitleColor: d.subTitleColor,
+        subTitleMultiIndex: d.subTitleMultiIndex,
         subTitleAnimate: d.subTitleAnimate,
         content: d.content,
+        contentIndex: d.contentIndex,
         contentColor: d.contentColor,
+        contentMultiIndex: d.contentMultiIndex,
         contentAnimate: d.contentAnimate
       }
     }
@@ -323,10 +367,14 @@ Page({
         name: '地图页面',
         backgroundImg_url: d.files,
         title: d.title,
+        titleIndex: d.titleIndex,
         titleColor: d.titleColor,
+        titleMultiIndex: d.titleMultiIndex,
         titleAnimate: d.titleAnimate,
         subTitle: d.subTitle,
+        subTitleIndex: d.subTitleIndex,
         subTitleColor: d.subTitleColor,
+        subTitleMultiIndex: d.subTitleMultiIndex,
         subTitleAnimate: d.subTitleAnimate,
         date: d.date,
         location: d.selectMapLocation
@@ -340,14 +388,20 @@ Page({
         name: '填单页面',
         backgroundImg_url: d.files,
         title: d.title,
+        titleIndex: d.titleIndex,
         titleColor: d.titleColor,
+        titleMultiIndex: d.titleMultiIndex,
         titleAnimate: d.titleAnimate,
         content: d.content,
+        contentIndex: d.contentIndex,
         contentColor: d.contentColor,
+        contentMultiIndex: d.contentMultiIndex,
         contentAnimate: d.contentAnimate,
         buttonName: d.buttonName,
-        buttonAnimate: d.buttonAnimate,
-        buttonColor: d.buttonColor
+        buttonIndex: d.buttonIndex,
+        buttonColor: d.buttonColor,
+        buttonMultiIndex: d.buttonMultiIndex,
+        buttonAnimate: d.buttonAnimate
       }
     }
 

@@ -6,19 +6,25 @@
   <view class="cu-item shadow-blur {{modalName=='move-box-'+ index?'move-cur':''}}" style="background-color:#8dc63f" wx:for="{{creative.pages}}" wx:key="index" bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
     <view class="cardTitle ">
       <view class="content">
-        <text>第{{index + 1}}个页面</text>
+        <text>{{item.title || '视频无标题'}}</text>
         <view class="text-gray text-sm">
           <text class="cuIcon-favor text-white">{{item.name}}</text>
         </view>
       </view>
     </view>
     <view class="move" style="transform: translateX(112%);">
-      <view class="cu-btn  bg-red shadow-blur" bindtap="deleteCardInfo" data-id="{{item._id}}" style="border-radius: 10rpx;height:100%; ">删除</view>
+      <view class="cu-btn  bg-green shadow-blur" bindtap="showOnePage" data-id="{{index}}" style="border-radius: 10rpx;height:100%; ">预览</view>
+      <view class="cu-btn  bg-red shadow-blur" bindtap="deleteCardInfo" data-id="{{index}}" style="border-radius: 10rpx;height:100%; ">删除</view>
     </view>
   </view>
   <view class="cu-item bg-img shadow-blur" bindtap="AddPage" style="background-color:#e03997">
     <view class="cardTitle">
       新建页面
+    </view>
+  </view>
+   <view class="cu-item bg-img shadow-blur" bindtap="ListSort" style="background-color:#e03997">
+    <view class="cardTitle">
+      修改顺序
     </view>
   </view>
   <view class="cu-item bg-img shadow-blur" bindtap="showPage" style="background-color:#e03997">
