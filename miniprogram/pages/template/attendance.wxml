@@ -1,0 +1,23 @@
+<cu-custom bgColor="bg-pink" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">参会名单</view>
+</cu-custom>
+
+<view class="cu-bar bg-white solid-bottom margin-top">
+	<view class="action">
+		<text class="cuIcon-title text-orange "></text> 填单信息
+	</view>
+</view>
+<view class="cu-list menu-avatar">
+	<view class="cu-item" wx:for="{{attendances}}" wx:key="index">
+		<view class="cu-avatar round lg" style="background-image:url({{item.userinfo.picurl}});"></view>
+		<view class="content">
+			<view class="text-grey">凯尔</view>
+			<view class="text-gray text-sm flex">
+				<text class="text-cut">
+							<text class="cuIcon-infofill text-red  margin-right-xs"></text> {{item.attendance.tel}}
+				</text>
+			</view>
+		</view>
+	</view>
+</view>

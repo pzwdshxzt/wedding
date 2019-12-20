@@ -1,6 +1,11 @@
 //app.js
 App({
-  onLaunch: function () {
+  onLaunch: function (options) {
+
+
+    console.log(options)
+
+
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
@@ -24,6 +29,9 @@ App({
       }
     })
 
+  },
+  onShow(options){
+    console.log(options)
   },
   globalData: {
     pageArray: [{

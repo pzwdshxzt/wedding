@@ -12,7 +12,7 @@
 		</view>
 	</view>
 </view>
-<view wx:if="{{!loading}}" class="container container-fill">
+<view wx:if="{{!loading && !splash}}" class="container container-fill">
 	<view class="scroll-fullpage" bindtouchstart="scrollTouchstart" bindtouchmove="scrollTouchmove" bindtouchend="scrollTouchend" style="-webkit-transform:translateY(-{{scrollindex*100}}%);transform:translateY(-{{scrollindex*100}}%);transition-duration:1.5s;margin-top: {{margintop}}px">
 		<view class="bg-img section" wx:for="{{weddingData.pages}}" wx:for-index="index" wx:for-item="page" wx:key="index">
 			<image wx:if="{{page.type !== '4'}}" class="background-img" src="{{page.backgroundImg_url}}" mode="aspectFill" />
@@ -64,19 +64,17 @@
 						<view class="cu-item shadow">
 							<form>
 								<view class="cu-form-group">
-									<view class="title text-grey">姓名</view>
-									<input placeholder="姓名">{{name}}</input>
+									<input bindblur="setNameValue" placeholder="姓名">{{name}}</input>
 								</view>
 								<view class="cu-form-group">
-									<view class="title text-grey">电话</view>
-									<input placeholder="电话(可选)">{{tel}}</input>
+									<input bindblur="setTelValue" placeholder="电话(可选)">{{tel}}</input>
 								</view>
 							</form>
 						</view>
 					</view>
 				</view>
 				<view class="flex justify-center {{scrollindex==index?page.contentAnimate:''}}">
-					<button class="cu-btn round line-{{page.buttonColor}} shadow">{{page.buttonName}}</button>
+					<button class="cu-btn round line-{{page.buttonColor}} shadow" bindtap="addAttendance">{{page.buttonName}}</button>
 				</view>
 				<view wx:if="{{totalnum - 1 !== index}}" class="flex justify-center">
 					<image class="animated fadeOutDown slower delay-3s infinite" style="width: 30px; height: 30px;" src="cloud://dev-p.6465-dev-p-1300251472/template/pull.png"></image>
@@ -98,4 +96,17 @@
 </view>
 <view wx:if="{{loading}}">
 	<loading></loading>
+</view>
+
+<view  class="splash-container" wx:if="{{splash}}"> 
+<text class="title">{{appName}}</text>
+    <view class="content">
+      <view class="hd" style="transform:rotateZ({{angle}}deg);">
+          <image class="logo" src="https://pengmaster.com/party/wechat/marry/gwtx_zip/HY2A1088.jpg" mode="aspectFill"></image>
+					<view class="UCenter-bg">
+         <image src="cloud://dev-p.6465-dev-p-1300251472/main/wave.gif" mode="scaleToFill" class="gif-wave"></image>
+				 </view>
+      </view>
+    <button class="confirm-btn" open-type='getUserInfo' bindgetuserinfo='getUserInfo' bindtap="btnEnter">点击进入</button>
+    </view>
 </view>

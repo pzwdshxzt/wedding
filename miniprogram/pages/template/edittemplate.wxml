@@ -1,12 +1,12 @@
 <cu-custom bgColor="bg-pink" isBack="{{true}}">
   <view slot="backText">返回</view>
-  <view slot="content">编辑模板</view>
+  <view slot="content">请柬</view>
 </cu-custom>
 <view class="cu-card  cu-list" wx:if="{{!loading}}">
   <view class="cu-item shadow-blur {{modalName=='move-box-'+ index?'move-cur':''}}" style="background-color:#8dc63f" wx:for="{{creative.pages}}" wx:key="index" bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
     <view class="cardTitle ">
       <view class="content">
-        <text>{{item.title || '视频无标题'}}</text>
+        <text>{{item.title || '无标题'}}</text>
         <view class="text-gray text-sm">
           <text class="cuIcon-favor text-white">{{item.name}}</text>
         </view>
@@ -27,9 +27,20 @@
       修改顺序
     </view>
   </view>
+    <view class="cu-item bg-img shadow-blur" bindtap="acceptData" style="background-color:#e03997">
+    <view class="cardTitle">
+      参会名单
+    </view>
+  </view>
   <view class="cu-item bg-img shadow-blur" bindtap="showPage" style="background-color:#e03997">
     <view class="cardTitle">
       预览
+    </view>
+  </view>
+
+   <view class="cu-item bg-img shadow-blur" bindtap="shareApp" style="background-color:#e03997">
+    <view class="cardTitle">
+      分享
     </view>
   </view>
 </view>

@@ -1,4 +1,5 @@
 const db = require('../../Utils/DbConsole')
+const util = require('../../Utils/Util')
 
 Page({
 
@@ -20,7 +21,7 @@ Page({
       startY: 0,
       selectedIndex: null,
     },
-    creative:{
+    creative: {
 
     },
     tmpid: '',
@@ -34,9 +35,9 @@ Page({
     this.setData({
       tmpid: options.tmpid
     })
-   
+
   },
-  queryCreative:function () {
+  queryCreative: function () {
     db.getCreativesById(this.data.tmpid).then(res => {
       console.log(res)
       this.setData({
@@ -52,7 +53,7 @@ Page({
     this.queryCreative()
   },
 
-  AddPage(e){
+  AddPage(e) {
     wx.navigateTo({
       url: 'templateone/create?tmpid=' + this.data.creative._id
     })
@@ -68,12 +69,12 @@ Page({
   ListTouchMove(e) {
     let d = this.data
     let diff = e.touches[0].pageX - d.ListTouchStart
-    
+
     let t = 'none'
-    if(diff > 100){
+    if (diff > 100) {
       t = 'right'
     }
-    if(diff < -100){
+    if (diff < -100) {
       t = 'left'
     }
     this.setData({
@@ -86,7 +87,7 @@ Page({
       this.setData({
         modalName: e.currentTarget.dataset.target
       })
-    } 
+    }
     if (this.data.ListTouchDirection == 'right') {
       this.setData({
         modalName: null
@@ -105,16 +106,21 @@ Page({
     wx.showModal({
       title: '提示',
       content: '确定删除该页面',
-      success: function(e) {
+      success: function (e) {
         if (e.confirm) {
           let pages = d.creative.pages
+          pages.splice(index, 1);
           console.log(pages)
-          db.saveSortList(d.tmpid,pages).then(res => {
-            if(res.stats.updated === 1){
-                wx.showToast({
-                  title: '删除页面成功',
-                  icon: 'none'
-                })
+          let param = {
+            'creative.pages': pages
+          }
+          db.saveSortList(d.tmpid, pages).then(res => {
+            if (res.stats.updated === 1) {
+              that.setData(param)
+              wx.showToast({
+                title: '删除页面成功',
+                icon: 'none'
+              })
             } else {
               wx.showToast({
                 title: '删除页面失败',
@@ -127,28 +133,28 @@ Page({
     })
     console.log(e)
   },
-  showOnePage(e){
+  showOnePage(e) {
     let page = this.data.creative.pages[e.currentTarget.dataset.id]
     console.log(page)
     wx.setStorage({
       key: 'showPageOne',
       data: page,
-      success: function(res) {
+      success: function (res) {
         wx.navigateTo({
           url: './templateone/templateone?type=1'
         })
       },
-      fail: function(err){
+      fail: function (err) {
         console.log(err)
       }
     })
   },
-  showPage(e){
-    if(this.data.creative.pages !== undefined &&this.data.creative.pages.length >= 1 ){
+  showPage(e) {
+    if (this.data.creative.pages !== undefined && this.data.creative.pages.length >= 1) {
       wx.setStorage({
         key: 'weddingData',
         data: this.data.creative,
-        success: function(res){
+        success: function (res) {
           wx.navigateTo({
             url: './templateone/templateone?type=2'
           })
@@ -189,20 +195,18 @@ Page({
     // 移动movableView
     pageInfo.readyPlaceIndex = readyPlaceIndex
     // console.log('移动到了索引', readyPlaceIndex, '选项为', optionList[readyPlaceIndex])
-  
+
     let param = {}
     let str = 'creative.pages'
     param[str] = optionList
-    this.setData(param,() =>{
+    this.setData(param, () => {
       this.setData({
         movableViewInfo: movableViewInfo,
         pageInfo: pageInfo
       })
     })
-  
+
   },
-
-
   dragEndTwo: function (event) {
     // 重置页面数据
     var pageInfo = this.data.pageInfo
@@ -220,10 +224,10 @@ Page({
       movableViewInfo: movableViewInfo
     })
   },
-  ListSort:function(){
-    if(this.data.creative.pages !== undefined &&this.data.creative.pages.length > 1 ){
+  ListSort: function () {
+    if (this.data.creative.pages !== undefined && this.data.creative.pages.length > 1) {
       wx.navigateTo({
-        url: 'sortList?tmpid='+this.data.tmpid
+        url: 'sortList?tmpid=' + this.data.tmpid
       })
     } else {
       wx.showToast({
@@ -232,14 +236,40 @@ Page({
       })
     }
   },
-   /** imageUrl: this.data.shareImg[util.getRandInt(0, 4)], */
-  onShareAppMessage:function(e){
+  shareApp: function (e){
+    let l = this.data.creative.pages.length
+    if(util.checkObject(l) || l <= 0){
+      wx.showToast({
+        title: '没有页面分享无意义',
+        icon: 'none'
+      })
+    } else {
+      wx.showToast({
+        title: '通过此页面调用的的分享页面只能给第一个人看，通过右上角胶囊',
+        icon: 'none'
+      })
+    }
+    
+  },
+  /** imageUrl: this.data.shareImg[util.getRandInt(0, 4)], */
+  onShareAppMessage: function (e) {
+    let uuid = util.uuid()
+    db.newShareToken(this.data.tmpid,uuid)
     return {
-      path: '/pages/template/templateone/templateone?type=3&tmpid=' + this.data.tmpid,
+      path: '/pages/template/templateone/templateone?type=4&tmpid=' + this.data.tmpid + '&token=' + uuid,
       desc: '邀请你来!!!',
-      success: function(res) {
+      success: function (res) {
         console.log('转发成功', res)
       }
     }
+  },
+  /**
+   * 查看填单人
+   * @param {} e 
+   */
+  acceptData: function (e) {
+    wx.navigateTo({
+      url: 'attendance?tmpid=' + this.data.tmpid
+    })
   }
 })

@@ -10,7 +10,7 @@
 			<view class="cu-item shadow-blur" style="background-color:#8dc63f">
 				<view class="move-title">
 					<view class="content">
-						<text>{{movableViewInfo.data.title || '视频无标题'}}</text>
+						<text>{{movableViewInfo.data.title || '无标题'}}</text>
 						<view class="text-gray text-sm">
 							<text class="cuIcon-favor text-white">{{movableViewInfo.data.name}}</text>
 						</view>
@@ -25,7 +25,7 @@
 		<view class="cuIcon-move cu-item shadow-blur {{modalName=='move-box-'+ index?'move-cur':''}}" style="background-color:#8dc63f" wx:for="{{creative.pages}}" wx:key="index">
 			<view class="cardTitle " data-index='{{index}}' bindtouchstart='dragStartTwo' bindtouchmove='dragMoveTwo' bindtouchend='dragEndTwo'>
 				<view class="content">
-						<text>{{item.title || '视频无标题'}}</text>
+						<text>{{item.title || '无标题'}}</text>
 					<view class="text-gray text-sm">
 						<text class="cuIcon-favor text-white" >{{item.name}}</text>
 					</view>

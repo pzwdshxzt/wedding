@@ -1,6 +1,5 @@
 {
   "pages": [
-    
     "pages/index/index",
     "pages/template/sortList",
     "pages/template/selecttemplate",
@@ -9,7 +8,9 @@
     "pages/system/system",
     "pages/template/templateone/templateone",
     "pages/template/edittemplate",
-    "pages/auth/auth"
+    "pages/auth/auth",
+    "pages/template/selecttemplateedit",
+    "pages/template/attendance"
   ],
   "tabBar": {
     "list": [
