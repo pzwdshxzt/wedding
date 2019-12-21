@@ -257,6 +257,7 @@ Page({
     db.newShareToken(this.data.tmpid,uuid)
     return {
       path: '/pages/template/templateone/templateone?type=4&tmpid=' + this.data.tmpid + '&token=' + uuid,
+      imageUrl: this.data.creative.sharePicUrl,
       desc: '邀请你来!!!',
       success: function (res) {
         console.log('转发成功', res)

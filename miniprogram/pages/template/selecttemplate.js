@@ -22,8 +22,8 @@ Page({
   /** 选择模板 */
   selectTemplate: (e) => {
     console.log(e)
-    
-    // db.addCreavite(e.currentTarget.dataset.tmpid,e.currentTarget.dataset.name)
-    // util.backPage(1)
+    wx.navigateTo({
+      url: './selecttemplateedit?tmpid=' + e.currentTarget.dataset.tmpid,
+    })
   }
 })

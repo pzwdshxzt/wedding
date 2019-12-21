@@ -297,45 +297,6 @@ Page({
   getPageInfo(e) {
     let d = this.data
     let pageData = {}
-
-
-
-    /**
-     * 
-     * 
-     * 
-     * title: '',
-    titleColor: 'white',
-    titleIndex: '14',
-    subTitle: '',
-    subTitleColor: 'white',
-    subTitleIndex: '14',
-    content: '',
-    contentColor: 'white',
-    contentIndex: '14',
-    buttonName: '提交',
-    buttonColor: 'white',
-    buttonIndex: '14',
-    pageIndex: '0',
-    titleMultiIndex: [22, 3, 0, 0],
-    titleAnimate: 'animated fadeInDown slower',
-    subTitleMultiIndex: [22, 3, 0, 0],
-    subTitleAnimate: 'animated fadeInDown slower',
-    contentMultiIndex: [22, 3, 0, 0],
-    contentAnimate: 'animated fadeInDown slower',
-    buttonMultiIndex: [22, 3, 0, 0],
-    buttonAnimate: 'animated fadeInDown slower',
-    date: '2018-12-25',
-    time: '12:01',
-    selectMapLocation: {
-      name: '地图选择'
-    },
-    files: '',
-    videoUrl: '',
-    videoImg: '',
-     * 
-     * 
-     */
     /** 选择通用页面 */
     if (d.pageIndex === '1') {
       pageData = {

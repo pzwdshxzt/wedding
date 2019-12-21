@@ -122,23 +122,10 @@ Page({
     let that = this
     wx.showModal({
       title: '提示',
-      content: '确定删除该请柬信息',
+      content: '确定删除该请柬',
       success: function (e) {
         if (e.confirm) {
-          /** 请柬删除 */
-          // db.collection('CardInfos').doc(id).remove().then(res => {
-          //   if (res.stats.removed === 1) {
-          //     wx.showToast({
-          //       title: '删除成功',
-          //     })
-          //     that.onShow()
-          //   } else {
-          //     wx.showToast({
-          //       icon: 'none',
-          //       title: '删除失败'
-          //     })
-          //   }
-          // })
+          db.deleteCreative(id)
         }
       }
     })

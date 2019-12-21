@@ -64,10 +64,10 @@
 						<view class="cu-item shadow">
 							<form>
 								<view class="cu-form-group">
-									<input bindblur="setNameValue" placeholder="姓名">{{name}}</input>
+									<input bindblur="setNameValue" value="{{name}}" placeholder="姓名"></input>
 								</view>
 								<view class="cu-form-group">
-									<input bindblur="setTelValue" placeholder="电话(可选)">{{tel}}</input>
+									<input bindblur="setTelValue" value="{{tel}}" placeholder="电话(可选)"></input>
 								</view>
 							</form>
 						</view>
@@ -102,7 +102,7 @@
 <text class="title">{{appName}}</text>
     <view class="content">
       <view class="hd" style="transform:rotateZ({{angle}}deg);">
-          <image class="logo" src="https://pengmaster.com/party/wechat/marry/gwtx_zip/HY2A1088.jpg" mode="aspectFill"></image>
+          <image class="logo" src="{{weddingData.headPicUrl}}" mode="aspectFill"></image>
 					<view class="UCenter-bg">
          <image src="cloud://dev-p.6465-dev-p-1300251472/main/wave.gif" mode="scaleToFill" class="gif-wave"></image>
 				 </view>

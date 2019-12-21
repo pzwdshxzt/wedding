@@ -34,19 +34,33 @@ const getCreativesById = (id) =>{
 }
 
 /** 选择模板后 创建当前 */
-const addCreavite = (templateId, name) => {
+const addCreavite = (data) => {
   return db.collection('Creative').add({
-    data:{
-      templateId,
-      name
-    },
+    data,
     success: res =>{
-      console.log('add creative success')
+      wx.showToast({
+        title: '创建请柬成功'
+       
+      })
       console.log(res)
     }
   })
 }
-
+/** 
+ * 删除请柬
+ * @param id 模板id
+ * @returns 
+ */
+const deleteCreative = (id) =>{
+  return db.collection('todos').doc(id).remove({
+    success: function(e){
+      wx.showToast({
+        title: '删除页面成功',
+        icon: 'none'
+      })
+    } 
+  })
+}
 /** 
  * 插入页面
  * @param id 模板id
@@ -160,8 +174,11 @@ const queryAttendance = (param) => {
  * @returns 
  */
 const updateAttendance = (param,data) =>{
-  return db.collection('ShareToken').where(param).update({data})
+  return db.collection('Attendance').where(param).update({data})
 }
+
+
+
 
 
 module.exports = {
@@ -170,6 +187,7 @@ module.exports = {
   getCreativesById,
   addPageInCreative,
   addCreavite,
+  deleteCreative,
   saveSortList,
   newShareToken,
   shareTokenQuery,

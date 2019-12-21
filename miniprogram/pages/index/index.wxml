@@ -5,10 +5,8 @@
   <view class="cu-item shadow-blur {{modalName=='move-box-'+ index?'move-cur':''}}" style="background-color:#8dc63f" wx:for="{{creatives}}" bindtap="editCreative" data-tmpid="{{item._id}}" wx:key="index" bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
     <view class="cardTitle">
       <view class="content">
-        <text>{{item._id | 8}}</text>
-        <view class="text-gray text-sm">
-          <text class="cuIcon-vipcard text-white ">{{item.name}}</text>
-        </view>
+        <text>{{item.title || '暂无标题'}}</text>
+     
       </view>
     </view>
     <view class="move" style="transform: translateX(112%);">
