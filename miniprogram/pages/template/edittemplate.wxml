@@ -14,7 +14,7 @@
     </view>
     <view class="move" style="transform: translateX(112%);">
       <view class="cu-btn  bg-green shadow-blur" bindtap="showOnePage" data-id="{{index}}" style="border-radius: 10rpx;height:100%; ">预览</view>
-      <view class="cu-btn  bg-red shadow-blur" bindtap="deleteCardInfo" data-id="{{index}}" style="border-radius: 10rpx;height:100%; ">删除</view>
+      <view class="cu-btn  bg-red shadow-blur" catchtap="deleteCardInfo" data-id="{{index}}" style="border-radius: 10rpx;height:100%; ">删除</view>
     </view>
   </view>
   <view class="cu-item bg-img shadow-blur" bindtap="AddPage" style="background-color:#e03997">

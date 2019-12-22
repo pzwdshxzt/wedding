@@ -52,8 +52,9 @@ const addCreavite = (data) => {
  * @returns 
  */
 const deleteCreative = (id) =>{
-  return db.collection('todos').doc(id).remove({
+  return db.collection('Creative').doc(id).remove({
     success: function(e){
+      
       wx.showToast({
         title: '删除页面成功',
         icon: 'none'
@@ -121,6 +122,17 @@ const tokenUse = (token,openid) =>{
   })
 }
 
+const queryTokenByUse = (openid) => {
+  return db.collection('ShareToken').where({
+    use: openid
+  })
+  .get({
+    success: function(res) {
+      // res.data 是包含以上定义的两条记录的数组
+      console.log(res.data)
+    }
+  })
+}
 
 /** 
  * 新增转发token

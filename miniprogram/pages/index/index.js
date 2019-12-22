@@ -88,7 +88,6 @@ Page({
   ListTouchMove(e) {
     let d = this.data
     let diff = e.touches[0].pageX - d.ListTouchStart
-    
     let t = 'none'
     if(diff > 100){
       t = 'right'
@@ -126,43 +125,10 @@ Page({
       success: function (e) {
         if (e.confirm) {
           db.deleteCreative(id)
+          that.queryCreative()
         }
       }
     })
     console.log(e)
-  },
-  onReachBottom: function () {
-    this.setData({
-      isloadmore: true
-    })
-    let that = this;
-    if (this.data.list.length < this.data.cardInfosTotalCount) {
-      db.collection('CardInfos')
-        .skip(this.data.list.length)
-        .orderBy('timestamp', 'desc').limit(10)
-        .get().then(res => {
-          if (res.data.length > 0) {
-            let cardInfos = {};
-            res.data.map(res => {
-              if (res.type === 1) {
-                res.number = res.number.replace(/(.{4})/g, "$1 ")
-              }
-            })
-            cardInfos = that.data.list.concat(res.data);
-            that.setData({
-              list: cardInfos,
-            })
-          }
-          this.setData({
-            isloadmore: false
-          })
-        }).catch(res => {
-          console.log("======" + res);
-        })
-    } else {
-      this.setData({
-        isloadmore: false
-      })
-    }
   }
 })
