@@ -46,6 +46,21 @@ const addCreavite = (data) => {
     }
   })
 }
+
+/** 选择模板后 创建当前 */
+const updateCreavite = (id,data) => {
+  return db.collection('Creative').doc(id).update({
+    data,
+    success: res =>{
+      wx.showToast({
+        title: '修改请柬成功'
+       
+      })
+      console.log(res)
+    }
+  })
+}
+
 /** 
  * 删除请柬
  * @param id 模板id
@@ -109,6 +124,7 @@ const shareTokenQuery = (token, tmpid) =>{
  * @returns 
  */
 const tokenUse = (token,openid) =>{
+  console.log(token)
   return db.collection('ShareToken').where({
     uuid: token
   }).update({
@@ -207,5 +223,6 @@ module.exports = {
   addAttendance,
   updateAttendance,
   queryAttendance,
-  queryAttendanceByOpenId
+  queryAttendanceByOpenId,
+  updateCreavite
 }

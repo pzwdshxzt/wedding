@@ -272,5 +272,11 @@ Page({
     wx.navigateTo({
       url: 'attendance?tmpid=' + this.data.tmpid
     })
+  },
+  /** 修改请柬信息 */
+  editTemplate: function(e){
+    wx.navigateTo({
+      url: './selecttemplateedit?type=99&id=' + this.data.tmpid,
+    })
   }
 })

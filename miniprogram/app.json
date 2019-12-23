@@ -1,13 +1,13 @@
 {
   "pages": [
-    
+    "pages/template/templateone/templateone",
     "pages/index/index",
     "pages/template/sortList",
     "pages/template/selecttemplate",
     "pages/home/home",
     "pages/template/templateone/create",
     "pages/system/system",
-    "pages/template/templateone/templateone",
+
     "pages/template/edittemplate",
     "pages/auth/auth",
     "pages/template/selecttemplateedit",

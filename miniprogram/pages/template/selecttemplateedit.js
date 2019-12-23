@@ -9,7 +9,8 @@ Page({
     title: '',
     tmpid: '',
     headPicUrl: '',
-    sharePicUrl: ''
+    sharePicUrl: '',
+    creative: {}
   },
   SetTitleValue: function (e) {
     this.setData({
@@ -21,10 +22,25 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)
-    this.setData({
-      tmpid: options.tmpid
-    })
- 
+    let type = options.type
+    if (!util.checkObject(type) && type === '99') {
+      db.getCreativesById(options.id).then(res => {
+        let creative = res.data
+        this.setData({
+          type,
+          creative,
+          headPicUrl: creative.headPicUrl,
+          sharePicUrl: creative.sharePicUrl,
+          tmpid: creative.templateId,
+          title: creative.title
+        })
+      })
+    } else {
+      this.setData({
+        tmpid: options.tmpid
+      })
+    }
+
   },
   /** 获取客户信息 */
   getUserInfo(e) {
@@ -50,17 +66,17 @@ Page({
   onShareAppMessage: function () {
 
   },
-  SaveTemplate: function(e){
+  SaveTemplate: function (e) {
 
     let d = this.data
-    if (util.checkObject(d.title)){
+    if (util.checkObject(d.title)) {
       wx.showToast({
         title: '标题不能为空',
         icon: 'none'
       })
       return
     }
-    if (util.checkObject(d.headPicUrl)){
+    if (util.checkObject(d.headPicUrl)) {
       wx.showToast({
         title: '头像图片不能为空',
         icon: 'none'
@@ -68,28 +84,40 @@ Page({
       return
     }
 
-    if (util.checkObject(d.sharePicUrl)){
+    if (util.checkObject(d.sharePicUrl)) {
       wx.showToast({
         title: '分享图片不能为空',
         icon: 'none'
       })
       return
     }
-    let data = {
-      title: d.title,
-      headPicUrl: d.headPicUrl,
-      sharePicUrl: d.sharePicUrl,
-      templateId: d.tmpid
+
+    if (!util.checkObject(d.type) && d.type === '99') {
+      let data = {
+        title: d.title,
+        headPicUrl: d.headPicUrl,
+        sharePicUrl: d.sharePicUrl,
+      }
+      db.updateCreavite(d.creative._id, data)
+      util.backPage(1)
+    } else {
+      let data = {
+        title: d.title,
+        headPicUrl: d.headPicUrl,
+        sharePicUrl: d.sharePicUrl,
+        templateId: d.tmpid
+      }
+      db.addCreavite(data)
+      util.backPage(2)
     }
-    db.addCreavite(data)
-    util.backPage(2)
+
   },
-  ViewHeadImage: function(e) {
+  ViewHeadImage: function (e) {
     wx.previewImage({
       current: this.data.headPicUrl
     });
   },
-  ChooseHeadImage:function(e){
+  ChooseHeadImage: function (e) {
     let that = this
     wx.chooseImage({
       count: 1, //默认9
@@ -112,7 +140,7 @@ Page({
       }
     });
   },
-  ChooseShareImage:function(e){
+  ChooseShareImage: function (e) {
     let that = this
     wx.chooseImage({
       count: 1, //默认9
@@ -133,9 +161,88 @@ Page({
       }
     });
   },
-  ViewShareImage: function(e){
+  ViewShareImage: function (e) {
     wx.previewImage({
       current: this.data.sharePicUrl
     });
+  },
+  DelShareImg: function (e) {
+    let d = this.data
+    let that = this
+    wx.showModal({
+      title: '提示',
+      content: '确定删除分享图片？',
+      success: function (e) {
+        if (e.confirm) {
+          wx.cloud.deleteFile({
+            fileList: [d.sharePicUrl]
+          }).then(res => {
+            if (res.fileList[0].status === 0) {
+              wx.showToast({
+                title: '删除分享图片成功',
+                icon: 'none'
+              })
+              that.setData({
+                sharePicUrl: ''
+              })
+            } else {
+              wx.showToast({
+                title: '删除分享图片失败',
+                icon: 'none'
+              })
+            }
+          }).catch(error => {
+            wx.showToast({
+              title: '删除分享图片失败',
+              icon: 'none'
+            })
+            that.setData({
+              sharePicUrl: ''
+            })
+          })
+        }
+      }
+    })
+
+  },
+  DelHeadImg: function (e) {
+    let d = this.data
+    let that = this
+    wx.showModal({
+      title: '提示',
+      content: '确定删除首屏头像图片？',
+      success: function (e) {
+        if (e.confirm) {
+          wx.cloud.deleteFile({
+            fileList: [d.headPicUrl]
+          }).then(res => {
+            console.log(res)
+            if (res.fileList[0].status === 0) {
+              wx.showToast({
+                title: '删除首屏头像成功',
+                icon: 'none'
+              })
+              that.setData({
+                headPicUrl: ''
+              })
+            } else {
+              wx.showToast({
+                title: '删除首屏头像失败',
+                icon: 'none'
+              })
+              that.setData({
+                sharePicUrl: ''
+              })
+            }
+          }).catch(error => {
+            console.log(error)
+            wx.showToast({
+              title: '删除首屏头像失败',
+              icon: 'none'
+            })
+          })
+        }
+      }
+    })
   }
 })

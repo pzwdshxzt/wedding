@@ -19,7 +19,7 @@
 		<view class="grid col-4 grid-square flex-sub">
 			<view wx:if="{{headPicUrl !== ''}}" class="bg-img" bindtap="ViewHeadImage" data-url="{{headPicUrl}}">
 				<image src='{{headPicUrl}}' mode='aspectFill'></image>
-				<view class="cu-tag bg-red" catchtap="DelImg">
+				<view class="cu-tag bg-red" catchtap="DelHeadImg">
 					<text class="cuIcon-close"></text>
 				</view>
 			</view>
@@ -42,7 +42,7 @@
 		<view class="grid col-4 grid-square flex-sub">
 			<view wx:if="{{sharePicUrl !== ''}}" class="bg-img" bindtap="ViewShareImage" data-url="{{sharePicUrl}}">
 				<image src='{{sharePicUrl}}' mode='aspectFill'></image>
-				<view class="cu-tag bg-red" catchtap="DelImg">
+				<view class="cu-tag bg-red" catchtap="DelShareImg">
 					<text class="cuIcon-close"></text>
 				</view>
 			</view>
