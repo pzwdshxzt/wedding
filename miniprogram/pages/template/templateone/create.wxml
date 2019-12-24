@@ -127,34 +127,12 @@
 		 range="{{AnimateArray}}" range-key="name">
         <view class="picker">
 				{{AnimateArray[0][contentMultiIndex[0]].name}}
-          
-          
-          
-          
-          
           <text class="cuIcon-title lg text-gray"></text> 
         {{AnimateArray[1][contentMultiIndex[1]].name}}
-          
-          
-          
-          
-          
           <text class="cuIcon-title lg text-gray"></text>
         {{AnimateArray[2][contentMultiIndex[2]].name}}
-          
-          
-          
-          
-          
           <text class="cuIcon-title lg text-gray"></text> 
         {{AnimateArray[3][contentMultiIndex[3]].name}}
-
-        
-        
-        
-        
-        
-        
         </view>
       </picker>
     </view>
@@ -258,6 +236,6 @@
 
   <view class="padding flex flex-direction">
     <button bindtap="showCreate" wx:if="{{pageIndex !== '0'}}" class="cu-btn bg-pink margin-tb-sm lg">预览</button>
-    <button bindtap="saveCreate" wx:if="{{pageIndex !== '0'}}" class="cu-btn bg-pink margin-tb-sm lg">保存并返回</button>
+    <button bindtap="saveCreate" wx:if="{{pageIndex !== '0'}}" disabled="{{disabled}}" class="cu-btn bg-pink margin-tb-sm lg">保存并返回</button>
   </view>
 </form>

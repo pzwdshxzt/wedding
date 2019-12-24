@@ -283,22 +283,15 @@ page {
 }
 .title{
   position: absolute;
-  top: 120rpx;
-  left: 50%;
+  margin: 120rpx 120rpx;
   width: 600rpx;
   height: 200rpx;
-  margin-left: -150rpx;
-  opacity: 0;
-  animation: show 2.5s cubic-bezier(0.19, 1, 0.22, 1) .5s forwards;
   color: white;
   font-size: 55px;
   font-weight: bolder;
+  word-break:break-all;
 }
 
-@keyframes show{
-  from {opacity: 0; transform: translate3d(-200rpx,0,0); }
-  to {opacity: 1; transform: translate3d(0,0,0); }
-}
 .remind-box {
   flex: 1;
   display: flex;

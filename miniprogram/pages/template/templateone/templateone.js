@@ -37,11 +37,11 @@ Page({
     type: '',
   },
   onLoad: function (e) {
-    e = {
-      type: "4", 
-      tmpid: "72527ac65dfde5d50592da482d4f18ed", 
-      token: "53a67b71-354e-404d-87bb-588e9c617740"
-    }
+    // e = {
+    //   type: "4", 
+    //   tmpid: "72527ac65dfde5d50592da482d4f18ed", 
+    //   token: "53a67b71-354e-404d-87bb-588e9c617740"
+    // }
     console.log(e)
     let that = this
     let openid = ''
@@ -63,7 +63,6 @@ Page({
         that.setData(param, () => {
           this.setData({
             loading: false,
-            splash: true,
             totalnum: that.data.weddingData.page.length
           })
         })
@@ -77,7 +76,6 @@ Page({
           totalnum: weddingData.pages.length
         })
       }
-
       if (type === '3') {
         this.setData({
           tmpid: e.tmpid
@@ -86,10 +84,8 @@ Page({
         })
 
       } 
-
       console.log(type)
       if (type === '4') {
-        
         if (e.token !== undefined && e.token !== '') {
           db.shareTokenQuery(e.token, e.tmpid).then(res => {
             let tokeninfo = res.data[0]
@@ -101,7 +97,6 @@ Page({
                 duration: 2000
               })
             } else {
-              console.log('111111')
               if (tokeninfo.use !== undefined && tokeninfo.use !== '' && tokeninfo.tmpid === e.tmpid) {
                 if (tokeninfo.use === openid) {
                   this.setData({
@@ -119,9 +114,7 @@ Page({
                   }
                 }
               }
-
               if ((tokeninfo.use === undefined || tokeninfo.use === '') && tokeninfo._openid !== openid) {
-                console.log('1112222111')
                 db.tokenUse(e.token, this.data.openid)
                 this.setData({
                   tmpid: e.tmpid
@@ -129,9 +122,7 @@ Page({
                   this.queryCreative();
                 })
               }
-
               if (tokeninfo._openid === openid) {
-                console.log('11222224441111')
                 this.setData({
                   tmpid: e.tmpid
                 }, () => {

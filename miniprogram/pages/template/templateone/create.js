@@ -46,13 +46,22 @@ Page({
     videoImg: '',
     pageData: {
 
-    }
+    },
+    disabled: false
   },
-  onLoad(e){
+  onLoad(e) {
     console.log(e)
+    let type = e.type
+    if (!util.checkObject(type) && type === '1') {
+      let page = wx.getStorageSync('editPageInfo')
+      this.setPageInfo(page)
+    }
     this.setData({
+      type: type,
+      updateIndex: e.index,
       tmpid: e.tmpid
     })
+
   },
   /** 页面类型选择 */
   PagePickerChange(e) {
@@ -202,13 +211,12 @@ Page({
           selectMapLocation: data
         })
       },
-      fail: (data) =>{
+      fail: (data) => {
         console.log(data);
       }
     })
   },
   ChooseImage() {
-    let d = this.data
     let that = this
     wx.chooseImage({
       count: 1, //默认9
@@ -216,8 +224,6 @@ Page({
       sourceType: ['album', 'camera'], //从相册选择
       success: (res) => {
         console.log(res)
-        // that.transformBase(res);
-
         let path = 'user/background-' + util.getTimeStamp() + '.png'
         wx.cloud.uploadFile({
           cloudPath: path,
@@ -231,13 +237,15 @@ Page({
       }
     });
   },
-  
+
   ViewImage(e) {
     wx.previewImage({
       current: this.data.files
     });
   },
   DelVideo(e) {
+    let d = this.data
+    let that = this
     wx.showModal({
       title: '视频删除',
       content: '确定要删除这个视频🐎？',
@@ -245,8 +253,32 @@ Page({
       confirmText: '再见',
       success: res => {
         if (res.confirm) {
-          this.setData({
-            videoUrl: ''
+          wx.cloud.deleteFile({
+            fileList: [d.videoUrl, d.videoImg]
+          }).then(res => {
+            if (res.fileList[0].status === 0) {
+              wx.showToast({
+                title: '删除视频成功',
+                icon: 'none'
+              })
+              that.setData({
+                videoUrl: ''
+              })
+            } else {
+              wx.showToast({
+                title: '删除视频失败',
+                icon: 'none'
+              })
+            }
+          }).catch(error => {
+            wx.showToast({
+              title: '删除视频失败',
+              icon: 'none'
+            })
+            that.setData({
+              videoUrl: '',
+              videoImg: ''
+            })
           })
         }
       }
@@ -254,6 +286,7 @@ Page({
   },
   /** 文件上传 最后修改成本地文件 到时候在处理 */
   DelImg(e) {
+    let that = this
     wx.showModal({
       title: '背景图片删除',
       content: '确定要删除这张背景🐎？',
@@ -261,8 +294,31 @@ Page({
       confirmText: '再见',
       success: res => {
         if (res.confirm) {
-          this.setData({
-            files: ''
+          wx.cloud.deleteFile({
+            fileList: [d.files]
+          }).then(res => {
+            if (res.fileList[0].status === 0) {
+              wx.showToast({
+                title: '删除背景图片成功',
+                icon: 'none'
+              })
+              that.setData({
+                files: ''
+              })
+            } else {
+              wx.showToast({
+                title: '删除背景图片失败',
+                icon: 'none'
+              })
+            }
+          }).catch(error => {
+            wx.showToast({
+              title: '删除背景图片失败',
+              icon: 'none'
+            })
+            that.setData({
+              files: ''
+            })
           })
         }
       }
@@ -275,28 +331,59 @@ Page({
     wx.chooseVideo({
       sourceType: ['album', 'camera'],
       maxDuration: 60,
-      camera: ['front','back'],
-      success: function(res) {
+      camera: ['front', 'back'],
+      success: function (res) {
         console.log(res)
         let chooseImg = res
-        let path = 'user/background-video-' + util.getTimeStamp() + '.mp4'
+        let file = chooseImg.tempFilePath
+        let path = 'user/background-video-' + util.getTimeStamp() + file.substring(file.lastIndexOf("."), file.length)
         wx.cloud.uploadFile({
           cloudPath: path,
-          filePath: res.tempFilePath,
+          filePath: file,
         }).then(res => {
           console.log(res)
           that.setData({
-            videoUrl: res.fileID,
-            videoImg: chooseImg.thumbTempFilePath
+            videoUrl: res.fileID
+          })
+        })
+        let imgFile = chooseImg.thumbTempFilePath
+        let imgPath = 'user/background-videoImg-' + util.getTimeStamp() + imgFile.substring(imgFile.lastIndexOf("."), imgFile.length)
+        wx.cloud.uploadFile({
+          cloudPath: imgPath,
+          filePath: imgFile,
+        }).then(res => {
+          console.log(res)
+          that.setData({
+            videoImg: res.fileID
           })
         })
       }
     })
-  
+
   },
   getPageInfo(e) {
     let d = this.data
     let pageData = {}
+
+    if (d.pageIndex === '1' || d.pageIndex === '2' || d.pageIndex === '3') {
+      if (util.checkObject(d.files)) {
+        wx.showToast({
+          title: '背景图片未上传或者正在上传中,看到图片显示即可重试',
+          icon: 'none'
+        })
+        return
+      }
+    }
+
+    if (d.pageIndex === '4') {
+      if (util.checkObject(d.videoUrl) || util.checkObject(d.videoImg)) {
+        wx.showToast({
+          title: '视频未上传或者正在上传中,看到视频截图显示即可重试',
+          icon: 'none'
+        })
+        return
+      }
+    }
     /** 选择通用页面 */
     if (d.pageIndex === '1') {
       pageData = {
@@ -366,40 +453,152 @@ Page({
       }
     }
 
-
     /** 选择视频页面 */
     if (d.pageIndex === '4') {
       pageData = {
         type: '4',
         name: '视频页面',
-        videoUrl: d.videoUrl
+        videoUrl: d.videoUrl,
+        videoImg: d.videoImg
       }
     }
 
     return pageData
   },
+  /** 编辑初始化 */
+  setPageInfo(d) {
 
+    /** 选择通用页面 */
+    if (d.type === '1') {
+      this.setData({
+        pageIndex: d.type,
+        files: d.backgroundImg_url,
+        title: d.title,
+        titleIndex: d.titleIndex,
+        titleColor: d.titleColor,
+        titleMultiIndex: d.titleMultiIndex,
+        titleAnimate: d.titleAnimate,
+        subTitle: d.subTitle,
+        subTitleIndex: d.subTitleIndex,
+        subTitleColor: d.subTitleColor,
+        subTitleMultiIndex: d.subTitleMultiIndex,
+        subTitleAnimate: d.subTitleAnimate,
+        content: d.content,
+        contentIndex: d.contentIndex,
+        contentColor: d.contentColor,
+        contentMultiIndex: d.contentMultiIndex,
+        contentAnimate: d.contentAnimate
+      })
+    }
+    /** 选择地图页面 */
+    if (d.type === '2') {
+      this.setData({
+        pageIndex: d.type,
+        files: d.backgroundImg_url,
+        title: d.title,
+        titleIndex: d.titleIndex,
+        titleColor: d.titleColor,
+        titleMultiIndex: d.titleMultiIndex,
+        titleAnimate: d.titleAnimate,
+        subTitle: d.subTitle,
+        subTitleIndex: d.subTitleIndex,
+        subTitleColor: d.subTitleColor,
+        subTitleMultiIndex: d.subTitleMultiIndex,
+        subTitleAnimate: d.subTitleAnimate,
+        date: d.date,
+        selectMapLocation: d.location
+      })
+    }
+
+    /** 选择表格页面 */
+    if (d.type === '3') {
+      this.setData({
+        pageIndex: d.type,
+        files: d.backgroundImg_url,
+        title: d.title,
+        titleIndex: d.titleIndex,
+        titleColor: d.titleColor,
+        titleMultiIndex: d.titleMultiIndex,
+        titleAnimate: d.titleAnimate,
+        content: d.content,
+        contentIndex: d.contentIndex,
+        contentColor: d.contentColor,
+        contentMultiIndex: d.contentMultiIndex,
+        contentAnimate: d.contentAnimate,
+        buttonName: d.buttonName,
+        buttonIndex: d.buttonIndex,
+        buttonColor: d.buttonColor,
+        buttonMultiIndex: d.buttonMultiIndex,
+        buttonAnimate: d.buttonAnimate
+      })
+    }
+    /** 选择视频页面 */
+    if (d.type === '4') {
+      this.setData({
+        pageIndex: d.type,
+        videoUrl: d.videoUrl,
+        videoImg: d.videoImg
+      })
+    }
+  },
   showCreate(e) {
     console.log(e)
     let pageData = this.getPageInfo()
+    if (util.checkObject(pageData)) {
+      return
+    }
     wx.setStorage({
       key: 'showPageOne',
       data: pageData,
-      success: function(res) {
+      success: function (res) {
         wx.navigateTo({
           url: '../templateone/templateone?type=1'
         })
       },
-      fail: function(err){
+      fail: function (err) {
         console.log(err)
       }
     })
 
   },
-  saveCreate(e){
+  saveCreate(e) {
     let pageData = this.getPageInfo()
-    db.addPageInCreative(this.data.tmpid,pageData).then(res=>{
-      util.backPage(1)
+    if (util.checkObject(pageData)) {
+      console.log(pageData)
+      return
+    }
+    let that = this
+    that.setData({
+      disabled: true
     })
+
+    if (!util.checkObject(that.data.type) && that.data.type === '1') {
+      let param = 'pages.' + that.data.updateIndex
+      let data = {
+        [param]: pageData
+      }
+      db.updateCreativePage(that.data.tmpid, data).then(res => {
+        util.backPage(1)
+        wx.showToast({
+          title: '修改页面成功',
+          icon: 'none'
+        })
+      })
+      that.setData({
+        disabled: false
+      })
+    } else {
+      db.addPageInCreative(this.data.tmpid, pageData).then(res => {
+        util.backPage(1)
+        wx.showToast({
+          title: '新建页面成功',
+          icon: 'none'
+        })
+      })
+      that.setData({
+        disabled: false
+      })
+    }
+
   }
 })

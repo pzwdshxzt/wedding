@@ -3,9 +3,13 @@
 	<view slot="content">模板信息</view>
 </cu-custom>
 <form>
-	<view class="cu-form-group">
+<view class="cu-form-group">
 		<view class="title">分享标题</view>
 		<input placeholder="分享标题" value="{{title}}" bindblur="SetTitleValue"></input>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">首屏标题</view>
+		<input placeholder="首屏标题" value="{{headTitle}}" bindblur="SetHeadTitleValue"></input>
 	</view>
 	<view class="cu-bar bg-white margin-top">
 		<view class="action">
@@ -54,6 +58,6 @@
 
 
 	<view class="padding flex flex-direction">
-		<button bindtap="SaveTemplate" class="cu-btn bg-pink margin-tb-sm lg">保存并返回</button>
+		<button bindtap="SaveTemplate" disabled="{{disabled}}" class="cu-btn bg-pink margin-tb-sm lg">保存并返回</button>
 	</view>
 </form>

@@ -10,11 +10,18 @@ Page({
     tmpid: '',
     headPicUrl: '',
     sharePicUrl: '',
-    creative: {}
+    headTitle: '',
+    creative: {},
+    disabled: false
   },
   SetTitleValue: function (e) {
     this.setData({
       title: e.detail.value
+    })
+  },
+  SetHeadTitleValue: function (e) {
+    this.setData({
+      headTitle: e.detail.value
     })
   },
   /**
@@ -32,7 +39,8 @@ Page({
           headPicUrl: creative.headPicUrl,
           sharePicUrl: creative.sharePicUrl,
           tmpid: creative.templateId,
-          title: creative.title
+          title: creative.title,
+          headTitle: creative.headTitle
         })
       })
     } else {
@@ -69,6 +77,7 @@ Page({
   SaveTemplate: function (e) {
 
     let d = this.data
+    let that = this
     if (util.checkObject(d.title)) {
       wx.showToast({
         title: '标题不能为空',
@@ -92,9 +101,13 @@ Page({
       return
     }
 
+    that.setData({
+      disabled: true
+    })
     if (!util.checkObject(d.type) && d.type === '99') {
       let data = {
         title: d.title,
+        headTitle: d.headTitle,
         headPicUrl: d.headPicUrl,
         sharePicUrl: d.sharePicUrl,
       }
@@ -103,14 +116,18 @@ Page({
     } else {
       let data = {
         title: d.title,
+        headTitle: d.headTitle,
         headPicUrl: d.headPicUrl,
         sharePicUrl: d.sharePicUrl,
         templateId: d.tmpid
       }
-      db.addCreavite(data)
-      util.backPage(2)
+      db.addCreavite(data).then(res => {
+        that.setData({
+          disabled: false
+        })
+        util.backPage(2)
+      })
     }
-
   },
   ViewHeadImage: function (e) {
     wx.previewImage({

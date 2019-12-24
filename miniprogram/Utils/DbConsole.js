@@ -36,14 +36,7 @@ const getCreativesById = (id) =>{
 /** 选择模板后 创建当前 */
 const addCreavite = (data) => {
   return db.collection('Creative').add({
-    data,
-    success: res =>{
-      wx.showToast({
-        title: '创建请柬成功'
-       
-      })
-      console.log(res)
-    }
+    data
   })
 }
 
@@ -129,25 +122,17 @@ const tokenUse = (token,openid) =>{
     uuid: token
   }).update({
     data:{
-      use: openid
+      use: _.set(openid)
     }
-  }).then(res => {
-    console.log(res)
-  }).catch(err => {
-    console.log(err)
   })
 }
 
+/** 查询阅读过的请柬 */
 const queryTokenByUse = (openid) => {
   return db.collection('ShareToken').where({
     use: openid
   })
-  .get({
-    success: function(res) {
-      // res.data 是包含以上定义的两条记录的数组
-      console.log(res.data)
-    }
-  })
+  .get()
 }
 
 /** 
@@ -205,6 +190,17 @@ const updateAttendance = (param,data) =>{
   return db.collection('Attendance').where(param).update({data})
 }
 
+/** 
+ * 修改请柬中页面信息
+ * @param id 模板id
+ * @param page 页面信息
+ * @returns 
+ */
+const updateCreativePage = (id,data) =>{
+  return db.collection('Creative').doc(id).update({
+    data
+  })
+}
 
 
 
@@ -219,10 +215,12 @@ module.exports = {
   saveSortList,
   newShareToken,
   shareTokenQuery,
+  queryTokenByUse,
   tokenUse,
   addAttendance,
   updateAttendance,
   queryAttendance,
   queryAttendanceByOpenId,
-  updateCreavite
+  updateCreavite,
+  updateCreativePage
 }

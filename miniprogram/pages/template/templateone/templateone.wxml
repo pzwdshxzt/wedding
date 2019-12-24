@@ -98,15 +98,15 @@
 	<loading></loading>
 </view>
 
-<view  class="splash-container" wx:if="{{splash}}"> 
-<text class="title">{{appName}}</text>
-    <view class="content">
-      <view class="hd" style="transform:rotateZ({{angle}}deg);">
-          <image class="logo" src="{{weddingData.headPicUrl}}" mode="aspectFill"></image>
-					<view class="UCenter-bg">
-         <image src="cloud://dev-p.6465-dev-p-1300251472/main/wave.gif" mode="scaleToFill" class="gif-wave"></image>
-				 </view>
-      </view>
-    <button class="confirm-btn" open-type='getUserInfo' bindgetuserinfo='getUserInfo' bindtap="btnEnter">点击进入</button>
-    </view>
+<view class="splash-container" wx:if="{{splash}}">
+	<text class="title animated fadeInDown slower">{{weddingData.headTitle}}</text>
+	<view class="content">
+		<view class="hd" style="transform:rotateZ({{angle}}deg);">
+			<image class="logo" src="{{weddingData.headPicUrl}}" mode="aspectFill"></image>
+			<view class="UCenter-bg">
+				<image src="cloud://dev-p.6465-dev-p-1300251472/main/wave.gif" mode="scaleToFill" class="gif-wave"></image>
+			</view>
+		</view>
+		<button class="confirm-btn" open-type='getUserInfo' bindgetuserinfo='getUserInfo' bindtap="btnEnter">点击进入</button>
+	</view>
 </view>

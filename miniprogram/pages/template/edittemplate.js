@@ -236,9 +236,9 @@ Page({
       })
     }
   },
-  shareApp: function (e){
+  shareApp: function (e) {
     let l = this.data.creative.pages.length
-    if(util.checkObject(l) || l <= 0){
+    if (util.checkObject(l) || l <= 0) {
       wx.showToast({
         title: '没有页面分享无意义',
         icon: 'none'
@@ -249,16 +249,16 @@ Page({
         icon: 'none'
       })
     }
-    
+
   },
   /** imageUrl: this.data.shareImg[util.getRandInt(0, 4)], */
   onShareAppMessage: function (e) {
     let uuid = util.uuid()
-    db.newShareToken(this.data.tmpid,uuid)
+    db.newShareToken(this.data.tmpid, uuid)
     return {
       path: '/pages/template/templateone/templateone?type=4&tmpid=' + this.data.tmpid + '&token=' + uuid,
       imageUrl: this.data.creative.sharePicUrl,
-      desc: '邀请你来!!!',
+      title: this.data.creative.title,
       success: function (res) {
         console.log('转发成功', res)
       }
@@ -274,9 +274,24 @@ Page({
     })
   },
   /** 修改请柬信息 */
-  editTemplate: function(e){
+  editTemplate: function (e) {
     wx.navigateTo({
       url: './selecttemplateedit?type=99&id=' + this.data.tmpid,
     })
+  },
+  /** 修改页面信息 */
+  EditPage: function (e) {
+    console.log(e)
+    let that = this
+    wx.setStorage({
+      key: 'editPageInfo',
+      data: that.data.creative.pages[e.currentTarget.dataset.index],
+      success: function (res) {
+        wx.navigateTo({
+          url: './templateone/create?type=1&index=' + e.currentTarget.dataset.index + '&tmpid='+ that.data.tmpid,
+        })
+      }
+    })
+
   }
 })
