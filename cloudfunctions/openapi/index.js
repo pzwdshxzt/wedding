@@ -22,6 +22,10 @@ exports.main = async (event, context) => {
     case 'getOpenContext': {
       return getOpenContext(event)
     }
+
+    case 'getShareAppCode': {
+      return getShareAppCode(event)
+    }
     default: {
       return
     }
@@ -100,4 +104,37 @@ async function getOpenData(event) {
 async function getOpenContext(event) {
   // 需 wx-server-sdk >= 0.5.0
   return cloud.getWXContext()
+}
+
+async function getShareAppCode(event) {
+  let scene = event.scene;
+  let page = event.page;
+  let width = event.width;
+
+  try {
+    // 1、通过云调用生成二维码
+    const result = await cloud.openapi.wxacode.getUnlimited({
+      scene,
+      page,
+      width
+    })
+    console.log(result)
+    // 2、上传图片到云存储
+    const upload = await cloud.uploadFile({
+      cloudPath: 'user/code/'+scene + '.jpg',
+      fileContent: result.buffer,
+    })
+    console.log(upload)
+    // 3、返回图片地址
+    var fileID = upload.fileID;
+    console.log("fileId=" + fileID);
+    const fileList = [fileID]
+    const imgList = await cloud.getTempFileURL({
+      fileList: fileList,
+    })
+    return imgList.fileList
+  } catch (err) {
+    console.log(err)
+    return err
+  }
 }

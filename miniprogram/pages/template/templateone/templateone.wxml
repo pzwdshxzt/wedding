@@ -74,7 +74,7 @@
 					</view>
 				</view>
 				<view class="flex justify-center {{scrollindex==index?page.contentAnimate:''}}">
-					<button class="cu-btn round line-{{page.buttonColor}} shadow" bindtap="addAttendance">{{page.buttonName}}</button>
+					<button class="cu-btn round line-{{page.buttonColor}} shadow" open-type='getUserInfo' bindgetuserinfo='getUserInfo' bindtap="addAttendance">{{page.buttonName}}</button>
 				</view>
 				<view wx:if="{{totalnum - 1 !== index}}" class="flex justify-center">
 					<image class="animated fadeOutDown slower delay-3s infinite" style="width: 30px; height: 30px;" src="cloud://dev-p.6465-dev-p-1300251472/template/pull.png"></image>

@@ -9,9 +9,9 @@ Page({
     totalnum: 1, //总共页面数
     starty: 0, //开始的位置x
     endy: 0, //结束的位置y
-    max_move_time: 800, //触发翻页的临界值 最大值
+    max_move_time: 1000, //触发翻页的临界值 最大值
     min_move_time: 200, //触发翻页的临界值 最小值
-    move_max: 120,
+    move_max: 100,
     margintop: 0, //滑动下拉距离
     music_url: musicUrl,
     isPlayingMusic: true,
@@ -251,16 +251,13 @@ Page({
     })
   },
   getUserInfo(e) {
-    console.log('getUserInfo')
-    var that = this
-    console.log(e)
     if (e.detail.errMsg === 'getUserInfo:ok') {
       app.globalData.userInfo = JSON.parse(e.detail.rawData)
     } else {
       console.log('fail', '获取用户信息失败')
       wx.showModal({
         title: '提示',
-        content: '获取用户信息失败',
+        content: '嘻嘻嘻嘻嘻',
         showCancel: false,
         confirmColor: '#e2211c',
         success(res) {

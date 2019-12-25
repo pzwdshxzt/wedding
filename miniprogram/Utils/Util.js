@@ -71,7 +71,7 @@ const failPage = (title, content) => {
 const homePage = () => {
   wx.switchTab({
     url: '../Home/Home',
-    fail: function() {
+    fail: function () {
       console.info("跳转失败")
     }
   })
@@ -315,7 +315,7 @@ const timeStampToTimeV7 = (future, timeStamp, num) => {
  * 数值 替换零
  */
 const replaceZero = (num, n) => {
-  let num_s = (''+ num).substr(-n)
+  let num_s = ('' + num).substr(-n)
   let newNum = Number(num_s)
   return num - newNum
 }
@@ -326,7 +326,7 @@ const uuid = () => {
   var s = [];
   var hexDigits = "0123456789abcdef";
   for (var i = 0; i < 36; i++) {
-      s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+    s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
   }
   s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
   s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
@@ -335,6 +335,54 @@ const uuid = () => {
   return uuid;
 }
 
+
+// 33-47=14 58-64=6 91-96=5 123-126=3 65-90=25 97-122=25
+// 10进制转成62进制
+const toSixTwo = (num) => {
+  let tmp = template()
+  let rule = 61
+  let a = num % rule
+  let b = (num / rule) >> 0
+  let str = tmp[a]
+  while (b > 0) {
+    a = b % rule
+    b = (b / rule) >> 0
+    str = tmp[a] + str
+  }
+  return str
+}
+// 62转10进制
+const toTen = (numStr) => {
+  let tmp = template()
+  let rule = 61
+  let arr = numStr.split('')
+  let num = 0
+  arr.reverse()
+  arr.map((value, index) => {
+    console.log(value)
+    num += (tmp.findIndex(val => val === value) * Math.pow(rule, index))
+  })
+  return num
+}
+// 生成模板
+const template = () => {
+  let arr = []
+  let lower = 97
+  let upper = 65
+  let letterNum = 122 - lower + 1
+  for (let i = 0; i < 62; i++) {
+    if (i < 10) {
+      arr.push(i.toString())
+    } else if (i < 10 + letterNum) {
+      arr.push(String.fromCharCode(lower))
+      lower++
+    } else if (i < 10 + letterNum + letterNum) {
+      arr.push(String.fromCharCode(upper))
+      upper++
+    }
+  }
+  return arr
+}
 module.exports = {
   getTimeStamp: getTimeStamp,
   formatDateTime: formatDateTime,
@@ -366,5 +414,7 @@ module.exports = {
   timeStampToTimeV6: timeStampToTimeV6,
   timeStampToTimeV7: timeStampToTimeV7,
   getDates: getDates,
-  uuid
+  uuid,
+  toSixTwo,
+  toTen
 }

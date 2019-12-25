@@ -6,13 +6,12 @@
 	<view class="cu-item text-blue">
 		<view class="bg-blue content shadow">
 			<view class="cu-capsule radius">
-				<view class="cu-tag bg-white text-blue">v1.0.1</view>
-				<view class="cu-tag line-white">2019/07/08</view>
+				<view class="cu-tag bg-white text-blue">v1.0.0</view>
+				<view class="cu-tag line-white">2019/12/25</view>
 			</view>
 			<view class="margin-top-sm text-content">
-				<view>1.0版本上线</view>
-				<view>新增任务审核机制</view>
-				<view>本小程序初衷是为了解决效率问题,由于是写后台出身(后台服务也写的不咋地),所以本项目有些简陋,各种方法、样式、组件等等可能处理的不是很妥当,仅供参考。</view>
+				<view>1.0.0版本上线</view>
+				<view>本项目模板就只有一个,还需待更新。</view>
 			</view>
 		</view>
 	</view>
@@ -25,7 +24,7 @@
 			<view class="margin-top-sm text-content">
 				<view>微婚礼请柬</view>
 				<view>立项</view>
-				<view>本小程序初衷是为了解决效率问题,由于是写后台出身(后台服务也写的不咋地),所以本项目有些简陋,各种方法、样式、组件等等可能处理的不是很妥当,仅供参考。</view>
+				<view>本小程序为请柬问题,后来发现有写的比我更好的小程序哈哈哈哈,本项目有些简陋,各种方法、样式、组件等等可能处理的不是很妥当,仅供参考。</view>
 			</view>
 		</view>
 	</view>

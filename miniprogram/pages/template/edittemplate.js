@@ -1,4 +1,5 @@
 const db = require('../../Utils/DbConsole')
+const dbq = wx.cloud.database()
 const util = require('../../Utils/Util')
 
 Page({
@@ -12,6 +13,7 @@ Page({
       showClass: 'none',
       data: {}
     },
+    showCode: false,
     pageInfo: {
       rowHeight: 80,
       scrollHeight: 85,
@@ -293,5 +295,57 @@ Page({
       }
     })
 
+  },
+  /** 分享图片二维码 */
+  sharePicApp: function(e) {
+    let that = this
+    var path = 'pages/template/templateone/templateone' 
+    var width = '430';
+    let shortCode = 100001
+    let scene = 'type=3&tmpid=' + this.data.tmpid
+    console.log(scene)
+    db.getMaxValue().then(res => {
+      console.log(res)
+      if(res.list.length >= 1){
+        shortCode = res.list[0].max + 1
+      }
+      dbq.collection('ShortCode').add({
+        data:{
+          shortCode,
+          scene
+        }
+      }).then(res => {
+        wx.cloud.callFunction({
+          name: 'openapi',
+          data: {
+            action: 'getShareAppCode',
+            page: path,
+            width,
+            scene: shortCode
+          },
+          success: res => {
+           
+            console.log(res)
+            console.log(res.result.fileID)
+            that.setData({
+              codeImg: res.result.fileID,
+              showCode: true
+            })
+            wx.showToast({
+              title: '生成成功!',
+            })
+          },
+          fail: error => {
+            console.log(JSON.stringify(error))
+            wx.showToast({
+              title: '生成失败!',
+            })
+          }
+        });
+        console.log(res)
+      }).catch(err =>{
+        console.log(err)
+      })
+    })
   }
 })

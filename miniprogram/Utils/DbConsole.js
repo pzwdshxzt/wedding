@@ -1,5 +1,6 @@
 const db = wx.cloud.database()
 const _ = db.command
+const $ = db.command.aggregate
 /**
  * 获取时间戳
  */
@@ -202,6 +203,21 @@ const updateCreativePage = (id,data) =>{
   })
 }
 
+/** 
+ * 获取最大值
+ * @param id 模板id
+ * @param page 页面信息
+ * @returns 
+ */
+const getMaxValue = () =>{
+  return db.collection('ShortCode')
+  .aggregate()
+  .group({
+    _id: '$_id',
+    max: $.max('$shortCode')
+  })
+  .end()
+}
 
 
 
@@ -222,5 +238,6 @@ module.exports = {
   queryAttendance,
   queryAttendanceByOpenId,
   updateCreavite,
-  updateCreativePage
+  updateCreativePage,
+  getMaxValue
 }

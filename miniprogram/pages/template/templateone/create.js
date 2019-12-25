@@ -65,7 +65,6 @@ Page({
   },
   /** 页面类型选择 */
   PagePickerChange(e) {
-    console.log(e);
     this.setData({
       pageIndex: e.detail.value
     })
@@ -80,7 +79,6 @@ Page({
     })
   },
   SetTitleValue(e) {
-    console.log(e)
     this.setData({
       title: e.detail.value
     })
@@ -95,7 +93,6 @@ Page({
     })
   },
   SetSubTitleValue(e) {
-    console.log(e)
     this.setData({
       subTitle: e.detail.value
     })
@@ -193,26 +190,24 @@ Page({
   /** 宴会地点选择 */
   MapSelect(e) {
     /** 判断是否授权未处理 */
-    console.log(e)
-    // wx.getSetting({
-    //   success (res) {
-    //     res.
-    //     console.log(res.authSetting)
-    //     // res.authSetting = {
-    //     //   "scope.userInfo": true,
-    //     //   "scope.userLocation": true
-    //     // }
-    //   }
-    // })
     wx.chooseLocation({
       success: (data) => {
-        console.log(data);
         this.setData({
           selectMapLocation: data
         })
       },
       fail: (data) => {
-        console.log(data);
+        wx.showModal({
+          title: '需要获取位置权限来选择地址',
+          content: '是否打开设置呢？',
+          cancelText: '算了',
+          confirmText: '好的',
+          success: res => {
+            if (res.confirm) {
+              wx.openSetting()
+            }
+          } 
+        })
       }
     })
   },
@@ -223,13 +218,11 @@ Page({
       sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], //从相册选择
       success: (res) => {
-        console.log(res)
         let path = 'user/background-' + util.getTimeStamp() + '.png'
         wx.cloud.uploadFile({
           cloudPath: path,
           filePath: res.tempFilePaths[0],
         }).then(res => {
-          console.log(res)
           that.setData({
             files: res.fileID
           })
@@ -333,7 +326,6 @@ Page({
       maxDuration: 60,
       camera: ['front', 'back'],
       success: function (res) {
-        console.log(res)
         let chooseImg = res
         let file = chooseImg.tempFilePath
         let path = 'user/background-video-' + util.getTimeStamp() + file.substring(file.lastIndexOf("."), file.length)
@@ -341,7 +333,6 @@ Page({
           cloudPath: path,
           filePath: file,
         }).then(res => {
-          console.log(res)
           that.setData({
             videoUrl: res.fileID
           })
@@ -352,7 +343,6 @@ Page({
           cloudPath: imgPath,
           filePath: imgFile,
         }).then(res => {
-          console.log(res)
           that.setData({
             videoImg: res.fileID
           })
@@ -542,7 +532,6 @@ Page({
     }
   },
   showCreate(e) {
-    console.log(e)
     let pageData = this.getPageInfo()
     if (util.checkObject(pageData)) {
       return
@@ -564,7 +553,6 @@ Page({
   saveCreate(e) {
     let pageData = this.getPageInfo()
     if (util.checkObject(pageData)) {
-      console.log(pageData)
       return
     }
     let that = this

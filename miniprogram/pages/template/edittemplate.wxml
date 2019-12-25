@@ -46,11 +46,20 @@
 
 	<view class="cu-item bg-img shadow-blur"  bindtap="shareApp" style="background-color:#e03997">
 		<view class="cardTitle">
-			分享
+			单独分享
+		</view>
+	</view>
+
+	<view class="cu-item bg-img shadow-blur"  bindtap="sharePicApp" style="background-color:#e03997">
+		<view class="cardTitle">
+			生产二维码分享
 		</view>
 	</view>
 </view>
 <view wx:if="{{loading}}">
 	<loading></loading>
+</view>
+<view wx:if="{{showCode}}">
+	<image src="{{codeImg}}" ></image>
 </view>
 <view class="cu-tabbar-height"></view>
