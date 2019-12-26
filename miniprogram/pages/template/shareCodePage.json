@@ -1,6 +1,6 @@
 {
+  "navigationBarTitleText": "海报组建",
   "usingComponents": {
-    "loading": "/components/loading/loading",
     "poster": "/components/poster/index"
   }
 }

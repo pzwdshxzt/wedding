@@ -50,16 +50,16 @@
 		</view>
 	</view>
 
-	<view class="cu-item bg-img shadow-blur"  bindtap="sharePicApp" style="background-color:#e03997">
+	<view class="cu-item bg-img shadow-blur" bindtap="sharePicApp" style="background-color:#e03997">
 		<view class="cardTitle">
-			生产二维码分享
+			<poster id="poster" config="{{posterConfig}}" bind:success="onPosterSuccess" bind:fail="onPosterFail">
+			二维码分享
+ </poster>
 		</view>
 	</view>
 </view>
 <view wx:if="{{loading}}">
 	<loading></loading>
 </view>
-<view wx:if="{{showCode}}">
-	<image src="{{codeImg}}" ></image>
-</view>
+
 <view class="cu-tabbar-height"></view>

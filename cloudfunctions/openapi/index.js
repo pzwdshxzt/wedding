@@ -128,11 +128,11 @@ async function getShareAppCode(event) {
     // 3、返回图片地址
     var fileID = upload.fileID;
     console.log("fileId=" + fileID);
-    const fileList = [fileID]
-    const imgList = await cloud.getTempFileURL({
-      fileList: fileList,
-    })
-    return imgList.fileList
+    // const fileList = [fileID]
+    // const imgList = await cloud.getTempFileURL({
+    //   fileList: fileList,
+    // })
+    return fileID
   } catch (err) {
     console.log(err)
     return err
