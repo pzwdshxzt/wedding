@@ -27,7 +27,6 @@ Page({
       selectedIndex: null,
     },
     creative: {
-
     },
     tmpid: '',
     loading: true

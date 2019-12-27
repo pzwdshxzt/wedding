@@ -1,6 +1,5 @@
 {
   "pages": [
- 
     "pages/home/home",
     "pages/index/index",
     "pages/template/sortList",
@@ -60,5 +59,6 @@
     "scope.userLocation": {
       "desc": "用于创建请柬时候选择办理地点"
     }
-  }
+  },
+  "requiredBackgroundModes": ["audio"]
 }

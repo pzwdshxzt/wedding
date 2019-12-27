@@ -46,6 +46,7 @@ const formatTime = date => {
   return [hour, minute, second].map(formatNumer).join(':')
 }
 const checkObject = obj => {
+  
   if (obj instanceof Array) {
     return obj.length === 0
   }

@@ -219,6 +219,11 @@ const getMaxValue = () =>{
   .end()
 }
 
+const getSceneTmp = (scene) =>{
+  return db.collection('Creative').where({
+      scene
+  }).get()
+}
 
 
 module.exports = {
@@ -239,5 +244,6 @@ module.exports = {
   queryAttendanceByOpenId,
   updateCreavite,
   updateCreativePage,
-  getMaxValue
+  getMaxValue,
+  getSceneTmp
 }

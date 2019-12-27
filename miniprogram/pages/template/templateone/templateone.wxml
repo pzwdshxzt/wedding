@@ -1,4 +1,4 @@
-<view wx:if="{{music_url}}">
+<view wx:if="{{weddingData.musicUrl}}">
 	<view wx:if="{{isPlayingMusic}}">
 		<view class="background_music" bindtap="play">
 			<image src="cloud://dev-p.6465-dev-p-1300251472/template/music_icon.png" class="musicImg music_icon" />

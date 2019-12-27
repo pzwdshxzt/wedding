@@ -11,6 +11,11 @@
 		<view class="title">首屏标题</view>
 		<input placeholder="首屏标题" value="{{headTitle}}" bindblur="SetHeadTitleValue"></input>
 	</view>
+		<view class="cu-form-group">
+		<view class="title">背景音乐</view>
+		<input placeholdaer="背景音乐" value="{{musicName}}" ></input>
+		<view bindtap="SelectMusicUrl">上传</view>
+	</view>
 	<view class="cu-bar bg-white margin-top">
 		<view class="action">
 			首屏头像

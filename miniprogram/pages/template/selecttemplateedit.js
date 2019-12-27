@@ -40,7 +40,9 @@ Page({
           sharePicUrl: creative.sharePicUrl,
           tmpid: creative.templateId,
           title: creative.title,
-          headTitle: creative.headTitle
+          headTitle: creative.headTitle,
+          musicUrl: creative.musicUrl,
+          musicName: creative.musicName
         })
       })
     } else {
@@ -101,6 +103,15 @@ Page({
       return
     }
 
+
+    if (util.checkObject(d.musicName) || d.musicName === '正在上传中') {
+      wx.showToast({
+        title: '背景音乐不能为空吧',
+        icon: 'none'
+      })
+      return
+    }
+
     that.setData({
       disabled: true
     })
@@ -110,6 +121,8 @@ Page({
         headTitle: d.headTitle,
         headPicUrl: d.headPicUrl,
         sharePicUrl: d.sharePicUrl,
+        musicName: d.musicName,
+        musicUrl: d.musicUrl
       }
       db.updateCreavite(d.creative._id, data)
       util.backPage(1)
@@ -119,7 +132,9 @@ Page({
         headTitle: d.headTitle,
         headPicUrl: d.headPicUrl,
         sharePicUrl: d.sharePicUrl,
-        templateId: d.tmpid
+        templateId: d.tmpid,
+        musicName: d.musicName,
+        musicUrl: d.musicUrl
       }
       db.addCreavite(data).then(res => {
         that.setData({
@@ -259,6 +274,32 @@ Page({
             })
           })
         }
+      }
+    })
+  },
+  SelectMusicUrl: function (e) {
+    let that = this
+    wx.chooseMessageFile({
+      count: 1,
+      type: 'file',
+      success(res) {
+        console.log(res)
+        that.setData({
+          musicName: '正在上传中'
+        })
+        let name = res.tempFiles[0].name
+        let file = res.tempFiles[0].path
+        let path = 'user/music/' + util.getTimeStamp() + file.substring(file.lastIndexOf("."), file.length)
+        wx.cloud.uploadFile({
+          cloudPath: path,
+          filePath: res.tempFiles[0].path,
+        }).then(res => {
+          console.log(res)
+          that.setData({
+            musicUrl: res.fileID,
+            musicName: name
+          })
+        })
       }
     })
   }

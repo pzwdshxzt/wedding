@@ -1,7 +1,9 @@
-const musicUrl = 'http://www.ytmp3.cn/down/49676.mp3'
 const db = require('../../../Utils/DbConsole')
 const cloud = require('../../../Utils/Cloud')
 const util = require('../../../Utils/Util')
+
+const backgroundAudioManager = wx.getBackgroundAudioManager()
+
 const app = new getApp()
 Page({
   data: {
@@ -13,7 +15,6 @@ Page({
     min_move_time: 200, //触发翻页的临界值 最小值
     move_max: 100,
     margintop: 0, //滑动下拉距离
-    music_url: musicUrl,
     isPlayingMusic: true,
     autoplay: true,
     interval: 2600,
@@ -42,10 +43,16 @@ Page({
     //   tmpid: "72527ac65dfde5d50592da482d4f18ed", 
     //   token: "53a67b71-354e-404d-87bb-588e9c617740"
     // }
-    console.log(e)
     let that = this
     let openid = ''
-    let type = e.type
+    let type
+    let scene
+    if (!util.checkObject(e.type)) {
+      type = e.type
+    }
+    if (!util.checkObject(e.scene)) {
+      scene = e.scene
+    }
     this.setData({
       type
     })
@@ -82,9 +89,41 @@ Page({
         }, () => {
           this.queryCreative();
         })
-
-      } 
-      console.log(type)
+      }
+      if (!util.checkObject(scene)) {
+        let openid = this.data.openid
+        db.getSceneTmp(scene).then(res => {
+          that.setData({
+            weddingData: res.data[0],
+            totalnum: res.data[0].pages.length,
+            loading: false,
+            splash: true,
+            tmpid: res.data[0]._id,
+            type: '3'
+          }, () => {
+            that.musicInit()
+          })
+          let data = {
+            _openid: openid,
+            tmpid: res.data[0]._id
+          }
+          db.queryAttendanceByOpenId(data).then(res => {
+            console.log(1111)
+            console.log(res)
+            let resp = res.data[0]
+            console.log(resp)
+            if (!util.checkObject(resp)) {
+              that.setData({
+                attendance: resp,
+                name: resp.name,
+                tel: resp.tel
+              })
+            }
+          })
+        }).catch(err => {
+          console.log(err)
+        })
+      }
       if (type === '4') {
         if (e.token !== undefined && e.token !== '') {
           db.shareTokenQuery(e.token, e.tmpid).then(res => {
@@ -139,17 +178,13 @@ Page({
           })
         }
       }
+
     }).catch(err => {
       wx.showToast({
         title: '获取个人信息失败',
         icon: 'none'
       })
     });
-    // wx.playBackgroundAudio({
-    //   dataUrl: musicUrl,
-    //   title: '',
-    //   coverImgUrl: ''
-    // })
   },
   queryCreative: function () {
     let tmpid = this.data.tmpid
@@ -162,6 +197,8 @@ Page({
         totalnum: res.data.pages.length,
         loading: false,
         splash: true
+      }, () => {
+        that.musicInit()
       })
       let data = {
         _openid: openid,
@@ -222,17 +259,13 @@ Page({
   },
   play: function (event) {
     if (this.data.isPlayingMusic) {
-      wx.pauseBackgroundAudio();
+      backgroundAudioManager.pause()
+      // wx.pauseBackgroundAudio();
       this.setData({
         isPlayingMusic: false
       })
     } else {
-      console.log('this.data.music_url', this.data.music_url)
-      wx.playBackgroundAudio({
-        dataUrl: this.data.music_url,
-        title: '',
-        coverImgUrl: ''
-      })
+      backgroundAudioManager.play()
       this.setData({
         isPlayingMusic: true
       })
@@ -334,5 +367,25 @@ Page({
     this.setData({
       tel: e.detail.value
     })
+  },
+  musicInit: function (e) {
+    let d = this.data
+    let that = this
+    backgroundAudioManager.title = '请柬背景音乐'
+    backgroundAudioManager.src = d.weddingData.musicUrl
+    backgroundAudioManager.play()
+    backgroundAudioManager.onError(err => {
+      console.log(err)
+      that.setData({
+        isPlayingMusic: false
+      })
+    })
+  },
+  onShow:function(e){
+    backgroundAudioManager.play()
+  },
+  onHide: function (e) {
+    console.log('页面隐藏')
+    backgroundAudioManager.pause()
   }
 })
