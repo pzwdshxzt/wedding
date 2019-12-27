@@ -318,43 +318,34 @@ Page({
     if (util.checkObject(that.data.creative.codeImg)) {
       var path = 'pages/template/templateone/templateone'
       var width = '430';
-      that.getCreateImgData().then(res => {
+      that.getCreateImgMaxValue().then(res => {
         console.log(res)
         let scene = res
-        dbq.collection('ShortCode').add({
+        wx.cloud.callFunction({
+          name: 'openapi',
           data: {
-            tmpid: that.data.tmpid,
+            action: 'getShareAppCode',
+            page: path,
+            width,
             scene
-          }
-        }).then(res => {
-          console.log(res)
-          wx.cloud.callFunction({
-            name: 'openapi',
-            data: {
-              action: 'getShareAppCode',
-              page: path,
-              width,
+          },
+          success: res => {
+            let data = {
+              codeImg: res.result,
               scene
-            },
-            success: res => {
-              let data = {
-                codeImg: res.result
-              }
-              db.updateCreativePage(that.data.tmpid, data).then(res => {
-                console.log(res)
-              })
-              that.setData({
-                ['creative.codeImg']: res.result
-              },() => {
-                that.showCodeImg()
-              })
-            },
-            fail: error => {
-              console.log(JSON.stringify(error))
             }
-          });
-        }).catch(err => {
-          console.log(err)
+            db.updateCreativePage(that.data.tmpid, data).then(res => {
+              console.log(res)
+            })
+            that.setData({
+              ['creative.codeImg']: res.result
+            }, () => {
+              that.showCodeImg()
+            })
+          },
+          fail: error => {
+            console.log(JSON.stringify(error))
+          }
         })
       })
     } else {
@@ -362,28 +353,29 @@ Page({
     }
   },
   /** 跳转显示图片 */
-  showCodeImg: function(){
+  showCodeImg: function () {
     let that = this
-    that.getCreateImgData().then(res => {
-      console.log(res)
+    that.getCreateImgDataInfo().then(res => {
       that.setData({
         posterConfig: res.jdConfig
       }, () => {
         Poster.create(true); // 入参：true为抹掉重新生成 
       });
+    }).catch(err => {
+      console.log(err)
     })
   },
   /** 获取生成分享图片信息 */
-  getCreateImgData: function () {
+  getCreateImgDataInfo: function () {
     let d = this.data
     return new Promise((resolve, reject) => {
       wx.cloud.getTempFileURL({
         fileList: [{
           fileID: d.creative.sharePicUrl,
-          maxAge: 60 * 10, 
-        },{
+          maxAge: 60 * 5,
+        }, {
           fileID: d.creative.codeImg,
-          maxAge: 60 * 10, 
+          maxAge: 60 * 5,
         }]
       }).then(res => {
         console.log(res.fileList)
@@ -413,7 +405,7 @@ Page({
                   color: '#ec1731',
                 }]
               },
-    
+
               {
                 x: 100,
                 y: 850,
@@ -440,7 +432,7 @@ Page({
                 url: res.fileList[1].tempFileURL,
               }
             ]
-    
+
           }
         }
         resolve(posterConfig)
@@ -449,15 +441,15 @@ Page({
       })
     })
   },
-  /** 获取当前页面二维码 */
-  getCreateImgData: function () {
+  /** 获取存储最大值 */
+  getCreateImgMaxValue: function () {
     let d = this.data
     return new Promise((resolve, reject) => {
       db.getMaxValue().then(res => {
         if (res.list.length >= 1) {
           resolve(res.list[0].max + 1)
         } else {
-          reject(100001)
+          reject('生成图片失败')
         }
       })
     })

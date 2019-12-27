@@ -210,11 +210,11 @@ const updateCreativePage = (id,data) =>{
  * @returns 
  */
 const getMaxValue = () =>{
-  return db.collection('ShortCode')
+  return db.collection('Creative')
   .aggregate()
   .group({
     _id: '$_id',
-    max: $.max('$shortCode')
+    max: $.max('$scene')
   })
   .end()
 }
