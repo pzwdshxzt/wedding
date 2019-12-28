@@ -225,6 +225,15 @@ const getSceneTmp = (scene) =>{
   }).get()
 }
 
+/**
+ * 获取配置参数
+ */
+const getConfig = (param) =>{
+  return db.collection('Config').where({
+    param
+  }).get()
+}
+
 
 module.exports = {
   getTemplate,
@@ -245,5 +254,6 @@ module.exports = {
   updateCreavite,
   updateCreativePage,
   getMaxValue,
-  getSceneTmp
+  getSceneTmp,
+  getConfig
 }

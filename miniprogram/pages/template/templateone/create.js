@@ -279,6 +279,7 @@ Page({
   },
   /** 文件上传 最后修改成本地文件 到时候在处理 */
   DelImg(e) {
+    let d = this.data
     let that = this
     wx.showModal({
       title: '背景图片删除',

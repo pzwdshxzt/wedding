@@ -7,11 +7,17 @@ Page({
     openid: '',
     creatives: [
 
-    ]
+    ],
+    openCreative: false
   },
 
   onLoad: function (e) {
     let that = this
+    db.getConfig('openCreative').then(res => {
+      that.setData({
+        openCreative: res.data[0].value
+      })
+    })
     cloud.getOpendId().then(res => {
       let openid = res
       that.setData({
