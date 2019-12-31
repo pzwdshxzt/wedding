@@ -3,7 +3,7 @@ const dbq = wx.cloud.database()
 const util = require('../../Utils/Util')
 import Poster from '../../components/poster/poster';
 
-
+//pages/template/edittemplate
 
 Page({
 
@@ -26,15 +26,24 @@ Page({
       startY: 0,
       selectedIndex: null,
     },
-    creative: {
-    },
+    creative: {},
     tmpid: '',
-    loading: true
+    loading: true,
+    mock: true
   },
   /**
    * 生命周期函数--监听页面加载
    */
+  initConfig: function () {
+    let that = this
+    db.getConfig('mock').then(res => {
+      that.setData({
+        mock: res.data[0].value
+      })
+    })
+  },
   onLoad: function (options) {
+    this.initConfig();
     console.log(options)
     this.setData({
       tmpid: options.tmpid
@@ -286,17 +295,18 @@ Page({
   /** 修改页面信息 */
   EditPage: function (e) {
     console.log(e)
-    let that = this
-    wx.setStorage({
-      key: 'editPageInfo',
-      data: that.data.creative.pages[e.currentTarget.dataset.index],
-      success: function (res) {
-        wx.navigateTo({
-          url: './templateone/create?type=1&index=' + e.currentTarget.dataset.index + '&tmpid=' + that.data.tmpid,
-        })
-      }
-    })
-
+    if (!this.data.mock) {
+      let that = this
+      wx.setStorage({
+        key: 'editPageInfo',
+        data: that.data.creative.pages[e.currentTarget.dataset.index],
+        success: function (res) {
+          wx.navigateTo({
+            url: './templateone/create?type=1&index=' + e.currentTarget.dataset.index + '&tmpid=' + that.data.tmpid,
+          })
+        }
+      })
+    }
   },
   onPosterSuccess(e) {
     const {
@@ -400,7 +410,7 @@ Page({
                 baseLine: 'middle',
                 text: [{
                   text: d.creative.title,
-                  fontSize: 36,
+                  fontSize: 32,
                   color: '#ec1731',
                 }]
               },
@@ -411,7 +421,7 @@ Page({
                 baseLine: 'middle',
                 text: [{
                   text: '长按识别小程序码',
-                  fontSize: 28,
+                  fontSize: 24,
                   color: '#929292',
                 }]
               }
@@ -426,7 +436,7 @@ Page({
               {
                 width: 220,
                 height: 220,
-                x: 420,
+                x: 480,
                 y: 710,
                 url: res.fileList[1].tempFileURL,
               }

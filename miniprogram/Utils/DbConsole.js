@@ -234,6 +234,13 @@ const getConfig = (param) =>{
   }).get()
 }
 
+/**
+ * 获取配置参数
+ */
+const getConfigList = () =>{
+  return db.collection('Config').get()
+}
+
 
 module.exports = {
   getTemplate,
@@ -255,5 +262,6 @@ module.exports = {
   updateCreativePage,
   getMaxValue,
   getSceneTmp,
-  getConfig
+  getConfig,
+  getConfigList
 }

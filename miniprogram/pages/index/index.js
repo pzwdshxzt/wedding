@@ -8,29 +8,42 @@ Page({
     creatives: [
 
     ],
-    openCreative: false
+    openCreative: false,
+    mock: true
   },
-
-  onLoad: function (e) {
+  initConfig: function (e) {
     let that = this
     db.getConfig('openCreative').then(res => {
       that.setData({
         openCreative: res.data[0].value
       })
     })
-    cloud.getOpendId().then(res => {
-      let openid = res
+    db.getConfig('mock').then(res => {
       that.setData({
-        openid
+        mock: res.data[0].value
+      }, () => {
+        if (that.data.mock) {
+          that.setData({
+            openid: 'mock'
+          })
+          that.queryCreative('mock')
+        } else {
+          cloud.getOpendId().then(res => {
+            let openid = res
+            that.setData({
+              openid
+            })
+            that.queryCreative(openid)
+          }).catch(err => {
+            console.log(err)
+          });
+        }
       })
-       this.queryCreative(openid)
-    }).catch(err => {
-      wx.showToast({
-        title: '获取个人信息失败',
-        icon: 'none'
-      })
-    });
-   
+    })
+  },
+  onLoad: function (e) {
+    let that = this
+    that.initConfig()
   },
   onShow: function (e) {
     this.queryCreative()
@@ -39,12 +52,12 @@ Page({
   queryCreative: function (o) {
     let openid = o || this.data.openid
     console.log(openid)
-    if(!util.checkObject(openid)){
-        db.getCreativesByOpenId(openid).then(res => {
-          this.setData({
-            creatives: res.data
-          })
+    if (!util.checkObject(openid)) {
+      db.getCreativesByOpenId(openid).then(res => {
+        this.setData({
+          creatives: res.data
         })
+      })
     }
   },
   /** 用户信息 */
@@ -95,10 +108,10 @@ Page({
     let d = this.data
     let diff = e.touches[0].pageX - d.ListTouchStart
     let t = 'none'
-    if(diff > 100){
+    if (diff > 100) {
       t = 'right'
     }
-    if(diff < -100){
+    if (diff < -100) {
       t = 'left'
     }
     this.setData({
@@ -111,7 +124,7 @@ Page({
       this.setData({
         modalName: e.currentTarget.dataset.target
       })
-    } 
+    }
     if (this.data.ListTouchDirection == 'right') {
       this.setData({
         modalName: null

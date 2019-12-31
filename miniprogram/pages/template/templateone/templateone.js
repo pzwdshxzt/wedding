@@ -3,8 +3,8 @@ const cloud = require('../../../Utils/Cloud')
 const util = require('../../../Utils/Util')
 
 const backgroundAudioManager = wx.getBackgroundAudioManager()
-
 const app = new getApp()
+
 Page({
   data: {
     scrollindex: 0, //当前页面的索引值
@@ -37,6 +37,24 @@ Page({
     tmpid: '',
     type: '',
   },
+  initConfig: function(e){
+    let that = this
+    db.getConfig('max_move_time').then(res => {
+      that.setData({
+        max_move_time: res.data[0].value
+      })
+    })
+    db.getConfig('min_move_time').then(res => {
+      that.setData({
+        min_move_time: res.data[0].value
+      })
+    })
+    db.getConfig('move_max').then(res => {
+      that.setData({
+        move_max: res.data[0].value
+      })
+    })
+  },
   onLoad: function (e) {
     // e = {
     //   type: "4", 
@@ -44,6 +62,8 @@ Page({
     //   token: "53a67b71-354e-404d-87bb-588e9c617740"
     // }
     let that = this
+    that.initConfig()
+   
     let openid = ''
     let type
     let scene
@@ -180,10 +200,11 @@ Page({
       }
 
     }).catch(err => {
-      wx.showToast({
-        title: '获取个人信息失败',
-        icon: 'none'
-      })
+      // wx.showToast({
+      //   title: '获取个人信息失败',
+      //   icon: 'none'
+      // })
+      console.log(err)
     });
   },
   queryCreative: function () {

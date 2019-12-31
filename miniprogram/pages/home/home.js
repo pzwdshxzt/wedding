@@ -9,7 +9,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    loading: true
+    loading: true,
+    mock: true
   },
 
   /**
@@ -17,19 +18,35 @@ Page({
    */
   onLoad: function (options) {
     let that = this
-    cloud.getOpendId().then(res => {
-      let openid = res
+    db.getConfig('mock').then(res => {
       that.setData({
-        openid
-      }, () => {
-        that.queryTokenByUser()
+        mock: res.data[0].value
+      },() =>{
+        if(that.data.mock){
+          db.getCreativesByOpenId('mock').then(res => {
+            this.setData({
+              ['creatives[0].creative']: res.data[0],
+              loading: false
+            })
+          })
+        } else {
+          cloud.getOpendId().then(res => {
+            let openid = res
+            that.setData({
+              openid
+            }, () => {
+              that.queryTokenByUser()
+            })
+          }).catch(err => {
+            wx.showToast({
+              title: '加载失败... 请重新再试!',
+              icon: 'none'
+            })
+          });
+        }
       })
-    }).catch(err => {
-      wx.showToast({
-        title: '获取个人信息失败',
-        icon: 'none'
-      })
-    });
+    })
+    
   },
   async queryTokenByUser(e) {
     let that = this
@@ -59,7 +76,6 @@ Page({
             that.setData(param);
 
           })
-          
         })
         resolve('success')
       } catch (error) {
@@ -71,8 +87,21 @@ Page({
   },
   showInvite: function (e) {
     console.log(e)
-    wx.navigateTo({
-      url: '../template/templateone/templateone?tmpid='+e.currentTarget.dataset.id + '&type=4&token=' + e.currentTarget.dataset.token,
-    })
+    if(this.data.mock){
+      wx.setStorage({
+        key: 'weddingData',
+        data: this.data.creatives[0].creative,
+        success: function (res) {
+          wx.navigateTo({
+            url: '../template/templateone/templateone?type=2'
+          })
+        }
+      })
+    } else {
+      wx.navigateTo({
+        url: '../template/templateone/templateone?tmpid='+e.currentTarget.dataset.id + '&type=4&token=' + e.currentTarget.dataset.token,
+      })
+    }
+    
   }
 })
