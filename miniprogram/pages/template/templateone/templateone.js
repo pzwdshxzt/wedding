@@ -56,11 +56,8 @@ Page({
     })
   },
   onLoad: function (e) {
-    // e = {
-    //   type: "4", 
-    //   tmpid: "72527ac65dfde5d50592da482d4f18ed", 
-    //   token: "53a67b71-354e-404d-87bb-588e9c617740"
-    // }
+    
+    console.log(e)
     let that = this
     that.initConfig()
    
@@ -69,13 +66,14 @@ Page({
     let scene
     if (!util.checkObject(e.type)) {
       type = e.type
+      this.setData({
+        type
+      })
     }
     if (!util.checkObject(e.scene)) {
       scene = e.scene
     }
-    this.setData({
-      type
-    })
+   
     cloud.getOpendId().then(res => {
       openid = res
       that.setData({
