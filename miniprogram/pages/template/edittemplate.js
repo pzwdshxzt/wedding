@@ -329,7 +329,7 @@ Page({
       var width = '430';
       that.getCreateImgMaxValue().then(res => {
         console.log(res)
-        let scene = res
+        let scene = String(res)
         wx.cloud.callFunction({
           name: 'openapi',
           data: {
