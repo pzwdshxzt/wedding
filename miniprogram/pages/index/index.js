@@ -18,6 +18,7 @@ Page({
         openCreative: res.data[0].value
       })
     })
+    // 躲避审核 把配置改为mock
     db.getConfig('mock').then(res => {
       that.setData({
         mock: res.data[0].value
