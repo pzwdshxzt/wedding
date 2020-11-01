@@ -18,4 +18,3 @@
 
 # 其他小程序
 ![其他小程序](https://raw.githubusercontent.com/pzwdshxzt/wechat-ruizhi/master/images/scan_code.jpg)
-当然这个也不维护了 累了
