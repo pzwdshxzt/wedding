@@ -17,4 +17,7 @@
 ![扫码体验](https://github.com/pzwdshxzt/wedding/blob/master/miniprogram/ScreenShots/share.jpg?raw=true)
 
 # 其他小程序
+## 睿智小程序
 ![其他小程序](https://raw.githubusercontent.com/pzwdshxzt/wechat-ruizhi/master/images/scan_code.jpg)
+## 福州市房管局查询小程序
+![其他小程序](https://github.com/pzwdshxzt/wedding/blob/master/fang.jpg)
